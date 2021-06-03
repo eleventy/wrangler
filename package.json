@@ -1,0 +1,69 @@
+{
+  "name": "wrangler",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.12.0",
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/user-event": "^12.8.3",
+    "electron-is-dev": "^2.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "4.0.3",
+    "web-vitals": "^1.1.2"
+  },
+  "main":"public/electron.js",
+  "homepage": "./",
+  "scripts": {
+    "start-react": "react-scripts start",
+    "build-react": "react-scripts build",
+    "start-electron": "nodemon --watch ./public/* --exec \"electron .\"",
+    "start": "concurrently \"npm run start-react\" \"wait-on http://localhost:3000 && npm run start-electron\" ",
+    "postinstall": "electron-builder install-app-deps",
+    "pack-app": "npm run build-react && electron-builder --dir",
+    "pack-build": "electron-builder  --dir",
+    "build": "npm run build-react && electron-builder"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "concurrently": "^6.2.0",
+    "electron": "^13.0.1",
+    "electron-builder": "^22.10.5",
+    "nodemon": "^2.0.7",
+    "wait-on": "^5.3.0"
+  },
+  "build": {
+    "appId": "wrangler.eleventy.be",
+    "productName": "Wrangler",
+    "copyright": "Eleventy Media",
+    "files": [
+      "build/**/*"
+    ],
+    "directories": {
+      "buildResources": "build"
+    }
+  },
+  "win":{
+    "icon": "./build/images/favicon.ico",
+    "target": [
+      "zip"
+    ]
+  }
+}
