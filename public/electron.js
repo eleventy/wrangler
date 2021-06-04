@@ -1,17 +1,14 @@
-const { app, BrowserWindow, ipcMain } = require('electron')
+const { app, BrowserWindow, ipcMain, nativeTheme } = require('electron')
 const isDev = require('electron-is-dev')
 const path = require('path')
+require('./backend/handlers')
 
-ipcMain.handle('test-invoke', (evt, args) => {
-  console.log({args})
-  return 10
-})
 
 let mainWindow
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({
-    width: 600,
+    width: 800,
     height: 600,
     webPreferences: {
       preload: isDev 
@@ -20,6 +17,7 @@ const createWindow = () => {
       contextIsolation: true,
     },
   })
+  mainWindow.removeMenu()
 
   mainWindow.loadURL(
     isDev
@@ -45,7 +43,9 @@ app.setPath(
 )
 
 app.whenReady().then(async () => {
-  await createWindow() 
+  nativeTheme.themeSource = 'dark'
+  await createWindow()
+  // startup()
 })
 
 app.on('window-all-closed', () => {

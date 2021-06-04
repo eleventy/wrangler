@@ -1,32 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import Appbar from './components/Appbar'
+import { ThemeProvider } from '@material-ui/core/styles'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import theme from './helpers/theme'
+import Layout from './Layout'
+import { store, Context } from './store'
 
-function App() {
 
-  const onClick = async () => {
-    const res = await window.api.testInvoke(5)
-    console.log({res})
-  }
+const App = () => {
   
   return (
-    <div className="App">
-      <header className="App-header">
-        <button onClick={onClick}>click</button>
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Context.Provider value={store}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Appbar />
+        <Layout />
+      </ThemeProvider>
+    </Context.Provider>
+  )
 }
 
-export default App;
+export default App
