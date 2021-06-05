@@ -1,6 +1,7 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
 import { observer } from 'mobx-react-lite'
 import { useContext } from "react"
 import { Context } from '../../store'
@@ -11,7 +12,9 @@ const Destination = observer( () => {
 
   return (
     <Paper className={classes.paper}>
-      Destination drives&nbsp;
+      <Typography variant="caption" display="block" color='textSecondary'>
+        Destination drives
+      </Typography>
     </Paper>
   )
 })

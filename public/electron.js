@@ -1,8 +1,8 @@
-const { app, BrowserWindow, ipcMain, nativeTheme } = require('electron')
+const { app, BrowserWindow, nativeTheme } = require('electron')
 const isDev = require('electron-is-dev')
 const path = require('path')
+const startup = require('./backend/helpers/startup')
 require('./backend/handlers')
-
 
 let mainWindow
 
@@ -15,9 +15,10 @@ const createWindow = () => {
         ? path.join(app.getAppPath(), './public/backend/preload.js')
         : path.join(app.getAppPath(), './build/backend/preload.js'),
       contextIsolation: true,
+      enableRemoteModule: true
     },
   })
-  mainWindow.removeMenu()
+  // mainWindow.removeMenu()
 
   mainWindow.loadURL(
     isDev
@@ -44,8 +45,8 @@ app.setPath(
 
 app.whenReady().then(async () => {
   nativeTheme.themeSource = 'dark'
+  startup()
   await createWindow()
-  // startup()
 })
 
 app.on('window-all-closed', () => {

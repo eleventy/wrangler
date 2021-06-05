@@ -1,7 +1,14 @@
 const drivelist = require('drivelist')
 
 const getDriveList = async () => {
-  const drives = await drivelist.list()
-  return drives
+  try{
+    console.log('getDriveList')
+    const drives = await drivelist.list()
+    console.log(drives.length)
+    return drives
+  }
+  catch(err){
+    console.error(err)
+  }
 }
 module.exports = getDriveList

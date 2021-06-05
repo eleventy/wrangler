@@ -1,7 +1,7 @@
 import { makeAutoObservable, runInAction, toJS } from "mobx"
 
 const pollDrives = async ({ self }) => {
-  const rawList =  await window.api.getDriveList()
+  const rawList = await window.api.getDriveList()
   const allDrives = parseRawList(rawList)
   runInAction( () => {
     self._drivelist = allDrives
