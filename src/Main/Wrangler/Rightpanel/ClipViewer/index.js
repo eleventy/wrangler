@@ -4,7 +4,7 @@ import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import { observer } from 'mobx-react-lite'
 import { useContext } from "react"
-import { Context } from '../../store'
+import { Context } from '../../../../store'
 
 const Clipviewer = observer( () => {
   const classes = useStyles()

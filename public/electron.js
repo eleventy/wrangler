@@ -8,8 +8,8 @@ let mainWindow
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1024,
+    height: 800,
     webPreferences: {
       preload: isDev 
         ? path.join(app.getAppPath(), './public/backend/preload.js')

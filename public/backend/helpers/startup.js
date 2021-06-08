@@ -3,7 +3,8 @@ const settings = require('electron-settings')
 const startup = async () => {
   console.log('Bootstrapping')
   await settings.configure({
-    prettify: true
+    prettify: true,
+    dir: './'
   })
   // Defaults
   if(! settings.hasSync('settings.pollingInterval') ){
