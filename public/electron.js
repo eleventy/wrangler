@@ -15,7 +15,8 @@ const createWindow = () => {
         ? path.join(app.getAppPath(), './public/backend/preload.js')
         : path.join(app.getAppPath(), './build/backend/preload.js'),
       contextIsolation: true,
-      enableRemoteModule: true
+      enableRemoteModule: true,
+      nodeIntegration: true,
     },
   })
   // mainWindow.removeMenu()

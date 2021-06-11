@@ -1,13 +1,15 @@
-import React,{ useState } from 'react'
+import React,{ useState, useContext } from 'react'
 import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
 import Typography from '@material-ui/core/Typography'
+import { observer } from 'mobx-react-lite'
+import { Context } from '../../../store'
 
-const ActiveProject = () => {
-  const [ project, setProject] = useState('chooseProject')
-
+const ActiveProject = observer( () => {
+  const store = useContext(Context)
+  const project = store.ui.activeProject
   const handleProjectChange = evt => {
-    setProject(evt.target.value)
+    store.ui.setActiveProject(evt.target.value)
   }
 
   return (
@@ -22,7 +24,7 @@ const ActiveProject = () => {
       </Select>
     </div>
   )
-}
+})
 export default ActiveProject
 
 ///////////////////

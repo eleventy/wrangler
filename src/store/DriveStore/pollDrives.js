@@ -44,7 +44,7 @@ const parseRawList = rawlist => {
 7/////////////
 
 const runRecipes = drive => {
-  // if (drive.path === 'C:\\') { drive.type = 'hidden' }
+  if (drive.path === 'C:\\') { drive.type = 'hidden' }
   if (drive.path === 'D:\\') { drive.type = 'destination' }
   if (drive.path === 'E:\\') { drive.type = 'source' }
 }

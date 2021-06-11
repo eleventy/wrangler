@@ -12,6 +12,8 @@ const UnassignedDrives = observer( () => {
   const store = useContext(Context)
   const unassignedDrives = store.driveStore.unassignedDrives
 
+  if(!unassignedDrives.length) return null
+
   return (
     <Paper className={classes.paper}>
       <Typography variant="caption" display="block" color='textSecondary'>

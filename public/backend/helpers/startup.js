@@ -1,18 +1,27 @@
 const settings = require('electron-settings')
 
 const startup = async () => {
-  console.log('Bootstrapping')
+
+  await configurePersistentStorage()
+  
+}
+module.exports = startup
+
+
+
+////////////////
+
+
+
+
+const configurePersistentStorage = async () => {
   await settings.configure({
     prettify: true,
     dir: './'
   })
+
   // Defaults
-  if(! settings.hasSync('settings.pollingInterval') ){
-    settings.setSync('settings.pollingInterval', 3)
+  if(!settings.hasSync('settings.pollingInterval') ){
+    settings.setSync('settings.pollingInterval', 3000)
   }
-  
-  const res = await settings.get('settings.pollingInterval')
-  console.log({res})
-  
 }
-module.exports = startup

@@ -4,6 +4,10 @@ import pollDrives from './pollDrives'
 class DriveStore {
   _drivelist = []
 
+  _activeProject = {
+    projectName: 'Project 1'
+  }
+
   constructor() {
     makeAutoObservable(this)
   }
@@ -16,6 +20,7 @@ class DriveStore {
   get unassignedDrives() { return this._drivelist.filter( d => d.type === 'unassigned' ) }
   get sourceDrives() { return this._drivelist.filter( d => d.type === 'source' ) }
   get destinationDrives() { return this._drivelist.filter( d => d.type === 'destination' ) }
+  get activeProject() { return this._activeProject }
   
 }
 export default DriveStore

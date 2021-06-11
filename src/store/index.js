@@ -1,11 +1,12 @@
 import { createContext } from "react"
-import DriveStore from './DriveStore.js'
+import DriveStore from './DriveStore'
+import UIStore from './UIStore'
 
 class Store {
-  secondsPassed = 5
 
   constructor() {
     this.driveStore = new DriveStore(this)
+    this.ui = new UIStore(this)
   }
 }
 

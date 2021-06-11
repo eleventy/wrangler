@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from 'react'
 import UnassignedDrives from './Leftpanel/UnassignedDrives'
 import SourceDrives from './Leftpanel/SourceDrives'
 import DestinationDrives from './Leftpanel/DestinationDrives'
+import ActionPanel from './Leftpanel/ActionPanel'
 import DriveViewer from './Rightpanel/DriveViewer'
 import ClipViewer from './Rightpanel/ClipViewer'
 import Toppanel from './Toppanel'
@@ -12,10 +13,10 @@ const Main = () => {
 
   useEffect( () => {
     // Scan the system for new drives every X seconds
+    const { pollingInterval } = store.ui.settings
     const interval = setInterval( () => {
-      console.log('polling...')
       store.driveStore.pollDrives()
-    }, 2000 )
+    }, pollingInterval )
     return () => {
       clearInterval(interval)
     }
@@ -28,6 +29,7 @@ const Main = () => {
         <div style={styles.leftPanel}>
           <UnassignedDrives />
           <SourceDrives />
+          <ActionPanel />
           <DestinationDrives />
         </div>
         <div style={styles.rightPanel}>

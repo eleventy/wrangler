@@ -1,5 +1,5 @@
 {
   "settings": {
-    "pollingInterval": 3
+    "pollingInterval": 3000
   }
 }
