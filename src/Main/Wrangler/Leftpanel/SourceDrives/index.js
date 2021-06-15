@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import { observer } from 'mobx-react-lite'
-import DriveCard from './DriveCard'
+import SourceDrive from './SourceDrive'
 import { Context } from '../../../../store'
 
 const SourceDrives = observer( () => {
@@ -11,14 +11,13 @@ const SourceDrives = observer( () => {
   const store = useContext(Context)
   const sourceDrives = store.driveStore.sourceDrives
 
-
   return (
     <Paper className={classes.paper}>
       <Typography variant="caption" display="block" color='textSecondary'>
         Source drives
       </Typography>
       <div className={classes.hbox}>
-        { sourceDrives.map( drive => <DriveCard key={drive.path} drive={drive} /> ) }
+        { sourceDrives.map( drive => <SourceDrive key={drive.path} drive={drive} /> ) }
       </div>
     </Paper>
   )

@@ -21,7 +21,6 @@ const Main = () => {
       clearInterval(interval)
     }
   }, [] )
-
   return (
     <div style={styles.root} >
       <Toppanel />

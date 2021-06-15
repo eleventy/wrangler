@@ -2,10 +2,12 @@ import { makeAutoObservable } from "mobx"
 
 class UIStore {
 
-  _activeProject = {
-    projectName: 'chooseProject'
+  _settings = {
+    pollingInterval: 2000
   }
-  _settings = {}
+
+  _projects = {}
+
 
   constructor() {
     makeAutoObservable(this)
@@ -13,10 +15,14 @@ class UIStore {
   }
 
   // Setters
-  setActiveProject(projectName) { this._activeProject.projectName = projectName }
+  setActiveProject(projectName) { 
+    this._projects.activeProject = projectName
+    window.api.settings_setSetting({ keyPath :'projects.activeProject', obj : projectName })
+  }
+  setProjects(projects) { self._projects = projects }
   
   // Getters
-  get activeProject() { return this._activeProject.projectName }
+  get activeProject() { return this._projects?.activeProject ? this._projects.activeProject : 'chooseProject' }
   get settings() { return this._settings }
   
 }
@@ -25,6 +31,7 @@ export default UIStore
 ///////
 
 const loadSettingsFromStorage = async self => {
-  const settings = await window.api.settings_getSettings('settings')
-  self._settings = settings
+  self._settings = await window.api.settings_getSettings('settings')
+  const projects = await window.api.settings_getSettings('projects')
+  self.setProjects(projects)
 }

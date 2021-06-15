@@ -4,8 +4,8 @@ import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import { observer } from 'mobx-react-lite'
 import { useContext } from "react"
-import DriveCard from './DriveCard'
-import { Context } from '../../../../store'
+import DestinationDrive from './DestinationDrive'
+import { Context } from 'store'
 
 const DestinationDrives = observer( () => {
   const classes = useStyles()
@@ -18,7 +18,7 @@ const DestinationDrives = observer( () => {
         Destination drives
       </Typography>
       <div className={classes.hbox}>
-        { destinationDrives.map( drive => <DriveCard key={drive.path} drive={drive} /> ) }
+        { destinationDrives.map( drive => <DestinationDrive key={drive.path} drive={drive} /> ) }
       </div>
     </Paper>
   )

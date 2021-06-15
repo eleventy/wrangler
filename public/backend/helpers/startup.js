@@ -24,4 +24,10 @@ const configurePersistentStorage = async () => {
   if(!settings.hasSync('settings.pollingInterval') ){
     settings.setSync('settings.pollingInterval', 3000)
   }
+  if(!settings.hasSync('projects') ){
+    settings.setSync('projects', { 
+      activeProject : 'chooseProject',
+      allProjects : []
+    })
+  }
 }

@@ -6,3 +6,8 @@ ipcMain.handle('settings.getSettings', async ( evt, args ) => {
   const res = await settings.get(args)
   return res
 })
+
+ipcMain.handle('settings.setSetting', async ( evt, args ) => {
+  // set settings in persistent storage from the renderer
+  settings.set(args.keyPath, args.obj)
+})

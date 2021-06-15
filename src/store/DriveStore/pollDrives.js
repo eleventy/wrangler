@@ -1,17 +1,14 @@
-import { runInAction } from "mobx"
 import _ from "lodash"
 
 const pollDrives = async ({ self }) => {
   /*
     Scan the filesystem for all current drives. Apply all possible recipes to the drives to
-    figure out what to do with them
+    figure out what to do with them.
   */
   const rawList = await window.api.getDriveList()
   const allDrives = parseRawList(rawList)
 
-  runInAction( () => {    // update mobx store
-    self._drivelist = allDrives
-  })
+  self.updateDriveLists(allDrives)
 }
 export default pollDrives
 
@@ -23,7 +20,7 @@ const parseRawList = rawlist => {
     Turn them into a usefull array of drive Objects.
     [{
       path: 'C:\',
-      type: hidden || source || destination
+      type: hidden || source || destination,
     }]
   */
   const allDrives = []
@@ -33,7 +30,8 @@ const parseRawList = rawlist => {
     rawdrive.mountpoints.forEach( rawDrive => {
       const drive = {
         path: rawDrive.path,
-        type: 'unassigned'
+        type: 'unassigned',
+        status: 'loading'
       }
       runRecipes(drive)
       allDrives.push(drive)
@@ -46,5 +44,8 @@ const parseRawList = rawlist => {
 const runRecipes = drive => {
   if (drive.path === 'C:\\') { drive.type = 'hidden' }
   if (drive.path === 'D:\\') { drive.type = 'destination' }
-  if (drive.path === 'E:\\') { drive.type = 'source' }
+  if (drive.path === 'E:\\') { 
+    drive.type = 'source'
+    drive.fileTypesToCopy = [ 'mp4', 'mts', 'mp3', 'wav' ]
+  }
 }
