@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
 import { Context } from 'store'
 import Loading from 'components/Loading'
 
@@ -32,7 +33,10 @@ const DestinationDrive = ({ drive }) => {
             </ul>
           </div>
         :
+        <div>
+          <Typography	variant='caption'>Scanning ...</Typography>
           <Loading />
+        </div>
       }
     </Paper>
   )

@@ -17,6 +17,7 @@ const styles = {
   root: {
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'center',
     padding: 5
   }
 }

@@ -1,5 +1,6 @@
 
 require('./electronSettings')
-require('./getDriveList')
+require('./drives_getDriveList')
+require('./drives_scanSourceDrive')
 
 

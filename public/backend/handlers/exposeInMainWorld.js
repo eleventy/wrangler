@@ -1,7 +1,9 @@
 const { ipcRenderer, contextBridge } = require('electron')
 
 contextBridge.exposeInMainWorld('api', {
-  getDriveList: () => ipcRenderer.invoke('drives.getDriveList'),
-  settings_getSettings: args => ipcRenderer.invoke('settings.getSettings', args),
-  settings_setSetting: args => ipcRenderer.invoke('settings.setSetting', args),
+  settings_getSettings: args => ipcRenderer.invoke('settings_getSettings', args),
+  settings_setSetting: args => ipcRenderer.invoke('settings_setSetting', args),
+
+  drives_getDriveList: () => ipcRenderer.invoke('drives_getDriveList'),
+  drives_scanSourceDrive: args => ipcRenderer.invoke('drives_scanSourceDrive', args),
 })

@@ -3,7 +3,7 @@ import { makeAutoObservable } from "mobx"
 class UIStore {
 
   _settings = {
-    pollingInterval: 2000
+    pollingInterval: 1000
   }
 
   _projects = {}

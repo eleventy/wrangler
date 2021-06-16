@@ -4,12 +4,29 @@ const updateDrivesLists = ({ self, allDrives }) => {
     After each system-scan for drives, check which drives are new, and which have disappeared
     Add them to the correct caterory ( source, destination, hidden, unassigned )
   */
+  const unassignedDrives = allDrives.filter( d => d.type === 'unassigned' )
+  updateUnassignedDrives({ self, unassignedDrives })
   const sourceDrives = allDrives.filter( d => d.type === 'source' )
   updateSourceDrives({ self, sourceDrives })
   const destinationDrives = allDrives.filter( d => d.type === 'destination' )
   updateDestinationDrives({ self, destinationDrives })
 }
 export default updateDrivesLists
+
+//////////////////
+
+const updateUnassignedDrives = ({ self, unassignedDrives }) => {
+  const newDrives = unassignedDrives.filter( drive => !self.unassignedDrives.some( s => s.path === drive.path ) )
+  const removedDrives = self.unassignedDrives.filter( drive => !unassignedDrives.some( s => s.path === drive.path ) )
+  if(removedDrives.length){
+    removedDrives.forEach( removedDrive => {
+      self._unassignedDrives.splice( self._unassignedDrives.findIndex( d => d.path === removedDrive.path ), 1 )
+    })
+  }
+  if(newDrives.length){
+    self._unassignedDrives.push( ...newDrives )
+  }
+}
 
 //////////////////
 

@@ -1,11 +1,12 @@
 import _ from "lodash"
+import slash from 'slash'
 
 const pollDrives = async ({ self }) => {
   /*
     Scan the filesystem for all current drives. Apply all possible recipes to the drives to
     figure out what to do with them.
   */
-  const rawList = await window.api.getDriveList()
+  const rawList = await window.api.drives_getDriveList()
   const allDrives = parseRawList(rawList)
 
   self.updateDriveLists(allDrives)
@@ -29,9 +30,9 @@ const parseRawList = rawlist => {
     if(!rawdrive.mountpoints || !rawdrive.mountpoints.length) { return }
     rawdrive.mountpoints.forEach( rawDrive => {
       const drive = {
-        path: rawDrive.path,
+        path: slash(rawDrive.path),
         type: 'unassigned',
-        status: 'loading'
+        status: 'new'
       }
       runRecipes(drive)
       allDrives.push(drive)
@@ -39,12 +40,12 @@ const parseRawList = rawlist => {
   })
   return _.sortBy(allDrives, ["path"])
 }
-7/////////////
+/////////////
 
 const runRecipes = drive => {
-  if (drive.path === 'C:\\') { drive.type = 'hidden' }
-  if (drive.path === 'D:\\') { drive.type = 'destination' }
-  if (drive.path === 'E:\\') { 
+  if (drive.path === 'C:/') { drive.type = 'hidden' }
+  if (drive.path === 'D:/') { drive.type = 'destination' }
+  if (drive.path === 'E:/') { 
     drive.type = 'source'
     drive.fileTypesToCopy = [ 'mp4', 'mts', 'mp3', 'wav' ]
   }
