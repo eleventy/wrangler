@@ -4,14 +4,14 @@ import updateDriveLists from './updateDriveLists'
 import scanSourceDrive from './scanSourceDrive'
 
 class DriveStore {
-  /** @type {unassignedDrives} */
-  _unassignedDrives = []
-  /** @type {sourceDrives} */
-  _sourceDrives = [] 
-  /** @type {destinationDrives} */
-  _destinationDrives = []
-
+  
   constructor() {
+    /** @type {unassignedDrives} */
+    this._unassignedDrives = []
+    /** @type {sourceDrives} */
+    this._sourceDrives = [] 
+    /** @type {destinationDrives} */
+    this._destinationDrives = []
     makeAutoObservable(this)
   }
 
@@ -19,6 +19,7 @@ class DriveStore {
   pollDrives() { pollDrives({ self: this }) } // Scan system for new/removed drives and cards
   updateDriveLists(allDrives) { updateDriveLists({ self: this, allDrives }) } // Update unassigned, source and dest drivelists
   scanSourceDrive(drive) { scanSourceDrive({ self: this, drive }) }
+
 
   // Getters
   get unassignedDrives() { return this._unassignedDrives }
@@ -43,6 +44,7 @@ export default DriveStore
  * An array of drives containing source clips
  * @typedef {object[]} sourceDrives
  * @property {string=} sourceDrives.path Pathname of the Drive 'E:/' (forward slashes)
+ * @property {string=} sourceDrives.label Label of the recipe
  * @property {('new'|'todo'|'done')=} sourceDrives.status Status of the drive
  * @property {mediaFile[]=} sourceDrives.files Mediafiles on the drive
 */

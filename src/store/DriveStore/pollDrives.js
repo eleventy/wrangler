@@ -6,6 +6,7 @@ const pollDrives = async ({ self }) => {
     Scan the filesystem for all current drives. Apply all possible recipes to the drives to
     figure out what to do with them.
   */
+ // @ts-ignore
   const rawList = await window.api.drives_getDriveList()
   const allDrives = parseRawList(rawList)
 
@@ -46,7 +47,8 @@ const runRecipes = drive => {
   if (drive.path === 'C:/') { drive.type = 'hidden' }
   if (drive.path === 'D:/') { drive.type = 'destination' }
   if (drive.path === 'E:/') { 
-    drive.type = 'source'
+    drive.type = 'source',
+    drive.label = 'Sony'
     drive.fileTypesToCopy = [ 'mp4', 'mts', 'mp3', 'wav' ]
   }
 }
