@@ -22,6 +22,9 @@ const UnassignedDrives = observer( () => {
       <div className={classes.hbox}>
         { unassignedDrives.map( drive => <DriveCard key={drive.path} drive={drive} /> ) }
       </div>
+      <Typography variant="caption" display="block" color='textSecondary'>
+        Please go to the Cookbook page to assign functions to these drives
+      </Typography>
     </Paper>
   )
 })
