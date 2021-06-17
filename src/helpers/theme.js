@@ -1,10 +1,14 @@
-import { unstable_createMuiStrictModeTheme as createMuiTheme } from '@material-ui/core'
+import { createTheme } from '@material-ui/core/styles'
 import blue from '@material-ui/core/colors/blue'
 import lightGreen from '@material-ui/core/colors/lightGreen'
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
-    type: 'dark',
+    mode: 'dark',
+    background: {
+      paper: '#222222',
+      default: '#101010'
+    },
     primary: {
       main: lightGreen['A200'],
     },
@@ -13,5 +17,6 @@ const theme = createMuiTheme({
     },
   },
 })
+console.log(theme)
 
 export default theme

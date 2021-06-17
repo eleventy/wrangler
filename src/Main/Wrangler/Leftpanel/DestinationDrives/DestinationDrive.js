@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/styles'
 import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
@@ -20,7 +20,7 @@ const DestinationDrive = ({ drive }) => {
 
   return (
     <Paper className={classes.root}>
-      <Button variant="outlined" color="default" className={classes.button}>
+      <Button variant="outlined" color='inherit' className={classes.button}>
         <div>{drive.path}</div>
       </Button>
       {

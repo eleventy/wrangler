@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/styles'
 import Button from '@material-ui/core/Button'
 
 const DriveCard = ({ drive }) => {
   const classes = useStyles()
 
   return (
-    <Button variant="outlined" color="default" className={classes.root}>
+    <Button variant="outlined" color='inherit' className={classes.root}>
       <div>{drive.path}</div>
     </Button>
   )
