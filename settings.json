@@ -1,8 +1,0 @@
-{
-  "settings": {
-    "pollingInterval": 3000
-  },
-  "projects": {
-    "activeProject": "Project 1"
-  }
-}

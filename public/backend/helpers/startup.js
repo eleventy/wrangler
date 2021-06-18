@@ -17,7 +17,7 @@ module.exports = startup
 const configurePersistentStorage = async () => {
   await settings.configure({
     prettify: true,
-    dir: './'
+    dir: './settings'
   })
 
   // Defaults

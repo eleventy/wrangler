@@ -2,6 +2,7 @@ import { makeAutoObservable } from 'mobx'
 import pollDrives from './pollDrives'
 import updateDriveLists from './updateDriveLists'
 import scanSourceDrive from './scanSourceDrive'
+import scanDestinationDrive from './scanDestinationDrive'
 
 class DriveStore {
   
@@ -19,6 +20,7 @@ class DriveStore {
   pollDrives() { pollDrives({ self: this }) } // Scan system for new/removed drives and cards
   updateDriveLists(allDrives) { updateDriveLists({ self: this, allDrives }) } // Update unassigned, source and dest drivelists
   scanSourceDrive(drive) { scanSourceDrive({ self: this, drive }) }
+  scanDestinationDrive(drive) { scanDestinationDrive({ self: this, drive }) }
 
 
   // Getters

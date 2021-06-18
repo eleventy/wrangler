@@ -2,42 +2,46 @@ import React, { useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import Button from '@material-ui/core/Button'
-import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
+import Paper from '@material-ui/core/Paper'
 import { Context } from 'store'
 import Loading from 'components/Loading'
+import filesize from 'filesize'
+import Capacity from './components/Capacity'
 
 const DestinationDrive = ({ drive }) => {
   const classes = useStyles()
   const store = useContext(Context)
 
   useEffect( () => {
-    // If it's an new source drive, scan it for possible clips
-    if(!drive.status) {
-      // store.driveStore.scanDestinationDrive(drive)
+    // If it's an new destinations drive, scan it for possible clips
+    if(drive.status === 'new') {
+      store.driveStore.scanDestinationDrive(drive)
     }
-  }, [] )
+  }, [drive] )
 
   return (
     <Paper className={classes.root}>
-      <Button variant="outlined" color='inherit' className={classes.button}>
-        <div>{drive.path}</div>
-      </Button>
-      {
-        drive.status === 'ready'
-        ?
-          <div>
-            <ul style={{paddingLeft: 20}}>
-              <li>20 Clips</li>
-              <li>120 GB</li>
-            </ul>
+      <Typography	variant='button' align='center'>{drive.label}</Typography>
+      <div className={classes.hbox}>
+        <Button variant="outlined" color='inherit' className={classes.button}>
+          <div>{drive.path}</div>
+        </Button>
+        {
+          drive.status !== 'new'
+          ?
+          <div style={{paddingLeft: 20}}>
+            <Typography	variant='caption' display='block' color='textSecondary' >{drive.files.length} Clips</Typography>
+            
           </div>
-        :
-        <div>
-          <Typography	variant='caption'>Scanning ...</Typography>
-          <Loading />
-        </div>
-      }
+          :
+            <div>
+              <Typography	variant='caption'>&nbsp;Scanning ...</Typography>
+              <Loading />
+            </div>
+        }
+      </div>
+      <Capacity drive={drive} />
     </Paper>
   )
 }
@@ -50,10 +54,12 @@ export default DestinationDrive
 
 const useStyles = makeStyles( theme => ({
   root: {
+    padding: 8
+  },
+  hbox: {
     display: 'flex',
-    padding: 5
   },
   button: {
-    margin: 5
+    // margin: 5
   },
 }))

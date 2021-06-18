@@ -45,7 +45,11 @@ const parseRawList = rawlist => {
 
 const runRecipes = drive => {
   if (drive.path === 'C:/') { drive.type = 'hidden' }
-  if (drive.path === 'D:/') { drive.type = 'destination' }
+  if (drive.path === 'D:/') { 
+    drive.type = 'destination' 
+    drive.rootFolder = 'backup'
+    drive.fileTypesToCopy = [ 'mp4', 'mts', 'mp3', 'wav' ]
+  }
   if (drive.path === 'E:/') { 
     drive.type = 'source',
     drive.label = 'Sony'

@@ -6,7 +6,6 @@ import Typography from '@material-ui/core/Typography'
 import Paper from '@material-ui/core/Paper'
 import { Context } from 'store'
 import Loading from 'components/Loading'
-import { toJS } from 'mobx'
 import filesize from 'filesize'
 
 const SourceDrive = ({ drive }) => {

@@ -2,8 +2,8 @@ import React, { useContext } from 'react'
 import { makeStyles } from '@material-ui/styles'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
-import { observer } from 'mobx-react-lite'
 import SourceDrive from './SourceDrive'
+import { observer } from 'mobx-react-lite'
 import { Context } from 'store'
 
 const SourceDrives = observer( () => {

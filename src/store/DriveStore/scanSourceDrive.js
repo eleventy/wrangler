@@ -9,7 +9,7 @@ import { runInAction } from "mobx"
  */
 const scanSourceDrive = async ({ self, drive }) => {
   // @ts-ignore
-  const result = await window.api.drives_scanSourceDrive( toJS( drive) )
+  const result = await window.api.drives_scanMediaDrive( toJS( drive) )
   if(result.error){
     console.log(result.error)
     // TODO Report to user

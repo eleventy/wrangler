@@ -7,7 +7,6 @@ const Toppanel = () => {
   return (
     <div style={styles.root}>
       <ActiveProject />
-      &nbsp;/&nbsp;
       <Datepicker />
     </div>
   )
@@ -19,6 +18,7 @@ export default Toppanel
 const styles = {
   root: {
     display: 'flex',
-    justifyContent: 'center'
+    justifyContent: 'space-around',
+    margin: 5
   }
 }

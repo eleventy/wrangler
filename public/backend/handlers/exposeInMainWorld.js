@@ -5,5 +5,6 @@ contextBridge.exposeInMainWorld('api', {
   settings_setSetting: args => ipcRenderer.invoke('settings_setSetting', args),
 
   drives_getDriveList: () => ipcRenderer.invoke('drives_getDriveList'),
-  drives_scanSourceDrive: args => ipcRenderer.invoke('drives_scanSourceDrive', args),
+  drives_scanMediaDrive: args => ipcRenderer.invoke('drives_scanMediaDrive', args),
+  drives_getDriveSpace: args => ipcRenderer.invoke('drives_getDriveSpace', args),
 })

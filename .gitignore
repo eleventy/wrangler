@@ -1,5 +1,5 @@
 /userdata
-settings.json
+/settings
 # dependencies
 /node_modules
 /.pnp
