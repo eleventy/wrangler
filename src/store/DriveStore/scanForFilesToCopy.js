@@ -24,13 +24,23 @@ const scanForFilesToCopy = ({ driveStore }) => {
             filesToCopy.push({
               sourcePath: sourceFile.path,
               destinationPath,
-              size: sourceFile.size
+              size: sourceFile.size,
+              status: 'todo'
             })
             if( sourceFile.path === 'E:/PRIVATE/AVCHD/BDMV/STREAM/00010.MTS'){
               filesToCopy.push({
                 sourcePath: sourceFile.path,
                 destinationPath: 'F:/backup/Project 1/2021-06-22/Sony',
-                size: sourceFile.size
+                size: sourceFile.size,
+                status: 'todo'
+              })
+            }
+            if( sourceFile.path === 'E:/PRIVATE/AVCHD/BDMV/STREAM/00014.MTS'){
+              filesToCopy.push({
+                sourcePath: sourceFile.path,
+                destinationPath: 'F:/backup/Project 1/2021-06-22/Sony',
+                size: sourceFile.size,
+                status: 'done'
               })
 
             }

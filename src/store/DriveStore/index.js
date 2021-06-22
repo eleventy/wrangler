@@ -81,4 +81,5 @@ export default DriveStore
  * @property {string} mediaFile.sourcePath - Full path to the clip, including filename
  * @property {string} mediaFile.destinationPath - Full path to the clip, without filename
  * @property {number} mediaFile.size - filesize in bytes
+ * @property {('todo'|'done')} mediaFile.status - Status of this mediafile
  */

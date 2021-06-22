@@ -9,10 +9,15 @@ class UIStore {
     this._settings = {
       pollingInterval: 2000
     }
+
     /** @type {projects} */
     this._projects = {}
+
     /** @type {date} */
     this._dateFolder = moment()
+
+    /**@type {appState} */
+    this._appState = 'standby'
     
     makeAutoObservable(this)
     loadSettingsFromStorage(this)
@@ -25,11 +30,13 @@ class UIStore {
   }
   setProjects(projects) { this._projects = projects }
   setDateFolder(date) { this._dateFolder = date }
+  startWrangling() { this._appState = 'running' }
   
   // Getters
   get activeProject() { return this._projects?.activeProject ? this._projects.activeProject : 'chooseProject' }
   get settings() { return this._settings }
   get dateFolder() { return this._dateFolder.format('yyyy-MM-DD') }
+  get appState() { return this._appState }
   
 }
 export default UIStore
@@ -49,10 +56,16 @@ const loadSettingsFromStorage = async self => {
  * @typedef {object} settings
  * @property {number} settings.pollingInterval How often to scan for drivechanges
  */
+
 /**
  * @typedef {object} projects
  * @property {string=} projects.activeProject Currently active project
  */
+
 /**
  * @typedef {object} date Date-folder
+ */
+
+/**
+ * @typedef {('standby'|'running')} appState state of the app
  */

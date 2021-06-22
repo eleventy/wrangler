@@ -58,7 +58,4 @@ const useStyles = makeStyles( theme => ({
   hbox: {
     display: 'flex',
   },
-  button: {
-    // margin: 5
-  },
 }))

@@ -2,28 +2,27 @@ import React, { useContext } from 'react'
 import { observer } from 'mobx-react-lite'
 import { Context } from 'store'
 import Typography from '@material-ui/core/Typography'
-import filesize from 'filesize'
+import DriveOverview from './DriveOverview'
 
 const InfoPanel = observer ( () => {
   const store = useContext(Context)
   const filesToCopy = splitFilesByDestination( store.driveStore.filesToCopy )
   const destinationList = []
   for (const key in filesToCopy) {
-    destinationList.push( getDestinationDriveOverview({drive: key, files: filesToCopy[key] }))
+    destinationList.push({ drive: key, files: filesToCopy[key] })
   }
   return (
-    <div  style={{ padding: 5 }} >
+    <div>
       <Typography variant='caption' display='block' color='textSecondary'>
         Files to backup:
       </Typography>
-      {destinationList}
+      {destinationList.map( drive => <DriveOverview drive={drive.drive} files={drive.files} key={drive.drive} /> ) }
     </div>
   )
 })
 export default InfoPanel
 
-
-///////////
+//////////////
 
 const splitFilesByDestination = unSortedFilesToCopy => {
   // Create a separate array per destination for all files
@@ -34,16 +33,4 @@ const splitFilesByDestination = unSortedFilesToCopy => {
     return obj
   }, {})
   return filesToCopy
-}
-
-const getDestinationDriveOverview = ({drive, files}) => {
-  return (
-    <Typography variant='caption' display='block' color='textSecondary' key={drive} >
-      &nbsp;&nbsp;{drive} : { filesInfo(files) }
-    </Typography>
-  )
-}
-
-const filesInfo = files => {
-  return `${files.length} clips | ${filesize( files.reduce( (acc, cur) => acc + cur.size, 0 ))} GB `
 }

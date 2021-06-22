@@ -16,11 +16,13 @@ const ActionPanel = observer( () => {
 
   const handleAutoIngest = () => { setAutoIngest( checked => !checked) }
 
+  const startWrangling = () => { store.ui.startWrangling() }
+
   return (
     <Paper className={classes.root}>
       <InfoPanel />
       <div className={classes.hbox}>
-      <Button variant="contained" color="primary">
+      <Button variant="contained" color="primary" disabled={ store.ui.appState === 'running' } onClick={startWrangling}>
         Start Ingest
       </Button>
       <FormControlLabel
@@ -37,7 +39,7 @@ export default ActionPanel
 
 const useStyles = makeStyles( theme => ({
   root: {
-    padding: 10,
+    padding: 5,
     margin: 10,
     backgroundColor: theme.palette.background.default,
     borderWidth: 2,
