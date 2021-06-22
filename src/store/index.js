@@ -5,8 +5,8 @@ import UIStore from './UIStore'
 class Store {
 
   constructor() {
-    this.driveStore = new DriveStore()
-    this.ui = new UIStore()
+    this.ui = new UIStore(this)
+    this.driveStore = new DriveStore(this)
   }
 }
 

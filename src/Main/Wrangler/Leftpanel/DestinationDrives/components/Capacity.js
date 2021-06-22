@@ -5,7 +5,9 @@ import Typography from '@material-ui/core/Typography'
 import filesize from 'filesize'
 
 const Capacity = ({ drive }) => {
-  console.log(getCapacity(drive.space))
+
+  if(!drive.space) return null
+  
   return (
     <div style={styles.root}>
       <Typography	variant='caption' display='block' color='textSecondary' >Capacity: {filesize(drive.space.total)}</Typography>

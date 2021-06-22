@@ -7,6 +7,7 @@ import Switch from '@material-ui/core/Switch'
 import Button from '@material-ui/core/Button'
 import { Context } from 'store'
 import { observer } from 'mobx-react-lite'
+import InfoPanel from './InfoPanel'
 
 const ActionPanel = observer( () => {
   const classes = useStyles()
@@ -15,9 +16,9 @@ const ActionPanel = observer( () => {
 
   const handleAutoIngest = () => { setAutoIngest( checked => !checked) }
 
-  const ingestFolder = `Ingesting to / ${store.ui.activeProject} / ${store.ui.dateFolder} / card label / card #`
   return (
     <Paper className={classes.root}>
+      <InfoPanel />
       <div className={classes.hbox}>
       <Button variant="contained" color="primary">
         Start Ingest
@@ -27,9 +28,6 @@ const ActionPanel = observer( () => {
         label="Auto Ingest"
         />
       </div>
-      <Typography	variant='caption' display='block' color='textSecondary' >
-        {ingestFolder}
-      </Typography>
     </Paper>
   )
 })

@@ -1,7 +1,7 @@
 import _ from "lodash"
 import slash from 'slash'
 
-const pollDrives = async ({ self }) => {
+const pollDrives = async ({ driveStore }) => {
   /*
     Scan the filesystem for all current drives. Apply all possible recipes to the drives to
     figure out what to do with them.
@@ -10,7 +10,7 @@ const pollDrives = async ({ self }) => {
   const rawList = await window.api.drives_getDriveList()
   const allDrives = parseRawList(rawList)
 
-  self.updateDriveLists(allDrives)
+  driveStore.updateDriveLists(allDrives)
 }
 export default pollDrives
 

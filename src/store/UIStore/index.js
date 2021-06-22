@@ -1,5 +1,6 @@
 import { makeAutoObservable } from "mobx"
 import moment from 'moment'
+import path from 'path'
 
 class UIStore {
 
@@ -12,6 +13,7 @@ class UIStore {
     this._projects = {}
     /** @type {date} */
     this._dateFolder = moment()
+    
     makeAutoObservable(this)
     loadSettingsFromStorage(this)
   }

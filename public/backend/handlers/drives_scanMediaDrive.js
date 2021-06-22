@@ -26,7 +26,7 @@ ipcMain.handle('drives_scanMediaDrive', async (evt, drive) => {
 
 ///////////////
 
-const getCwd = drive => drive.rootFolder ? path.join(drive.path, drive.rootFolder) : drive.path
+const getCwd = drive => drive.rootFolder ? path.posix.join(drive.path, drive.rootFolder) : drive.path
 
 
 const getGlobFileExtensionPattern = fileTypesToCopy => {
@@ -41,7 +41,7 @@ const getGlobFileExtensionPattern = fileTypesToCopy => {
 const getFilesInfo = ({ filepaths, drive }) => {
   // For each file in the array, get file info ( size, ...)
   const files = filepaths.map( filePath => {
-    const fullPath = path.join( getCwd(drive) , filePath)
+    const fullPath = path.posix.join( getCwd(drive) , filePath)
     const fileInfo = fs.statSync(fullPath)
     return {
       path: fullPath,

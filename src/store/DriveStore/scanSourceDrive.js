@@ -7,7 +7,7 @@ import { runInAction } from "mobx"
  * @param {Object} args.self The DriveStore object
  * @param {Object} args.drive Drive object, containing the path 
  */
-const scanSourceDrive = async ({ self, drive }) => {
+const scanSourceDrive = async ({ driveStore, drive }) => {
   // @ts-ignore
   const result = await window.api.drives_scanMediaDrive( toJS( drive) )
   if(result.error){
@@ -15,9 +15,12 @@ const scanSourceDrive = async ({ self, drive }) => {
     // TODO Report to user
     return
   }
-  const indexOfDrive = self._sourceDrives.findIndex( d => d.path === drive.path )
+  const indexOfDrive = driveStore._sourceDrives.findIndex( d => d.path === drive.path )
   drive.files = result.files
-  drive.status = 'todo'
-  runInAction( () =>{ self._sourceDrives.splice( indexOfDrive, 1, drive )} )
+  drive.status = 'ready'
+  runInAction( () => { 
+    driveStore._sourceDrives.splice( indexOfDrive, 1, drive )
+    driveStore.scanForFilesToCopy()
+  } )
 }
 export default scanSourceDrive
