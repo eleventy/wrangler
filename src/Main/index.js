@@ -5,6 +5,7 @@ import Tab from '@material-ui/core/Tab'
 import Wrangler from './Wrangler'
 import ProjectManager from './ProjectManager'
 import Cookbook from './Cookbook'
+import Alert from './components/Alert'
 
 const Main = () => {
 
@@ -21,6 +22,7 @@ const Main = () => {
           <Tab label="Cookbook" />
         </Tabs>
       </AppBar>
+      <Alert />
 
       { activeTab === 0 && <Wrangler />}
       { activeTab === 1 && <ProjectManager />}

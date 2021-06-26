@@ -1,20 +1,5 @@
 # wrangler #
 
-Store:
-{
-  ui: {
-
-  },
-  recipes: [],
-  jobs: [],
-  drives: [
-    {
-      name,
-      recipe
-    }
-  ]
-}
-
 ---
 
 ## Development and Building

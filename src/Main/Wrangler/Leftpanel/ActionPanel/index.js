@@ -1,7 +1,6 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { makeStyles } from '@material-ui/styles'
 import Paper from '@material-ui/core/Paper'
-import Typography from '@material-ui/core/Typography'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
 import Button from '@material-ui/core/Button'
@@ -16,7 +15,17 @@ const ActionPanel = observer( () => {
 
   const handleAutoIngest = () => { setAutoIngest( checked => !checked) }
 
-  const startWrangling = () => { store.ui.startWrangling() }
+  useEffect( () => {
+    window.api.drives_getCopyProgress( progress => {
+      console.log(progress)
+    })
+  },[] )
+
+  const startWrangling = () => { 
+    store.ui.startWrangling()
+    store.driveStore.startAnUpload()
+  }
+
 
   return (
     <Paper className={classes.root}>

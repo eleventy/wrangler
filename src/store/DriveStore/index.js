@@ -4,6 +4,7 @@ import updateDriveLists from './updateDriveLists'
 import scanSourceDrive from './scanSourceDrive'
 import scanDestinationDrive from './scanDestinationDrive'
 import scanForFilesToCopy from './scanForFilesToCopy'
+import startAnUpload from './startAnUpload'
 
 class DriveStore {
   
@@ -26,6 +27,7 @@ class DriveStore {
   scanSourceDrive(drive) { scanSourceDrive({ driveStore: this, drive }) }
   scanDestinationDrive(drive) { scanDestinationDrive({ driveStore: this, drive }) }
   scanForFilesToCopy() { scanForFilesToCopy({ driveStore: this })}
+  startAnUpload() { startAnUpload({ driveStore: this }) }
 
 
   // Getters

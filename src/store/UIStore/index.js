@@ -18,6 +18,9 @@ class UIStore {
 
     /**@type {appState} */
     this._appState = 'standby'
+
+    /**@type {alertState} */
+    this._alertState = { open: false, message: '', severity: 'warning' }
     
     makeAutoObservable(this)
     loadSettingsFromStorage(this)
@@ -31,12 +34,15 @@ class UIStore {
   setProjects(projects) { this._projects = projects }
   setDateFolder(date) { this._dateFolder = date }
   startWrangling() { this._appState = 'running' }
+  setAppState(state) {this._appState = state }
+  setAlertState(state) { this._alertState = { ...this._alertState, ...state } }
   
   // Getters
   get activeProject() { return this._projects?.activeProject ? this._projects.activeProject : 'chooseProject' }
   get settings() { return this._settings }
   get dateFolder() { return this._dateFolder.format('yyyy-MM-DD') }
   get appState() { return this._appState }
+  get alertState() { return this._alertState }
   
 }
 export default UIStore
@@ -68,4 +74,11 @@ const loadSettingsFromStorage = async self => {
 
 /**
  * @typedef {('standby'|'running')} appState state of the app
+ */
+
+/**
+ * @typedef {object} alertState
+ * @property {Boolean} alertState.open Is the alert open?
+ * @property {String} alertState.message Text to display
+ * @property {('success', 'info', 'warning', 'error')} alertState.severity How important is the message
  */

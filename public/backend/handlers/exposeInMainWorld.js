@@ -7,4 +7,7 @@ contextBridge.exposeInMainWorld('api', {
   drives_getDriveList: () => ipcRenderer.invoke('drives_getDriveList'),
   drives_scanMediaDrive: args => ipcRenderer.invoke('drives_scanMediaDrive', args),
   drives_getDriveSpace: args => ipcRenderer.invoke('drives_getDriveSpace', args),
+  drives_startAnUpload: args => ipcRenderer.invoke('drives_startAnUpload', args),
+  drives_getCopyProgress: callback => ipcRenderer.on('drives_getCopyProgress', (evt, data) => callback(data) )
+  
 })

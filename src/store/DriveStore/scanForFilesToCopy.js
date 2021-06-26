@@ -1,55 +1,74 @@
 import path from 'path'
+import { toJS } from 'mobx'
 
+const CARD_PREFIX = 'Card-'
+const CARD_REGEX = new RegExp(`.*\/${CARD_PREFIX}(...)`)
 /*
   scan all drives for files not in one of the backup drives
+    For each destination, see which sourcefiles are missing.
+    Put them in a new 'Card', unless some sourcefiles are already in a older Card.  
+    In that case, add them also to the same old card
+      ( Unless there is a name collision, then put all new files in a new Card )
 */
+
 const scanForFilesToCopy = ({ driveStore }) => {
   driveStore._filesToCopy = []
-  const filesToCopy = []
-  if( drivesNotReady(driveStore) ) return filesToCopy
+  if( drivesNotReady(driveStore) ) { return }
 
-  driveStore.sourceDrives.forEach( sourceDrive => {
-    sourceDrive.files.forEach( sourceFile => {
-      driveStore.destinationDrives.forEach( destinationDrive => {
-        
-        destinationDrive.files.forEach( destFile => {
-          if( !areFilesEqual({ sourceFile, destFile }) ){
-            const destinationPath = path.join(
-              destinationDrive.path,
-              destinationDrive.rootFolder,
-              driveStore._uiStore.activeProject,
-              driveStore._uiStore.dateFolder,
-              sourceDrive.label
-            )
-            filesToCopy.push({
+  driveStore.destinationDrives.forEach( destinationDrive => {
+    driveStore.sourceDrives.forEach( sourceDrive => {
+      const filesToCopyFromThisCard = []
+      let forceOldCard 
+      let forceNewCard
+      const newCard = getNewCard({destinationDrive})
+      
+      sourceDrive.files.forEach( sourceFile => {
+        const { srcIsInDestination, isSameFile, oldCard } = sourceFileIsInDestinationDrive({ sourceFile, destinationDrive })
+        if(!srcIsInDestination) {
+          // New file, not in destination => add to copylist
+          filesToCopyFromThisCard.push({
+            sourcePath: sourceFile.path,
+            size: sourceFile.size,
+            status: 'todo'
+          })
+        }
+        else {
+          // filename already exists in destination
+          if(isSameFile && !forceNewCard){
+            // identical file, so skip copy, but send new files to this cardFolder( new clips added later on same card)
+            forceOldCard = oldCard //regex[1]
+          }
+          else {
+            // We have a name collision with existing file.  Send this file and all other clips to newCard
+            forceNewCard = newCard
+            filesToCopyFromThisCard.push({
               sourcePath: sourceFile.path,
-              destinationPath,
               size: sourceFile.size,
               status: 'todo'
             })
-            if( sourceFile.path === 'E:/PRIVATE/AVCHD/BDMV/STREAM/00010.MTS'){
-              filesToCopy.push({
-                sourcePath: sourceFile.path,
-                destinationPath: 'F:/backup/Project 1/2021-06-22/Sony',
-                size: sourceFile.size,
-                status: 'todo'
-              })
-            }
-            if( sourceFile.path === 'E:/PRIVATE/AVCHD/BDMV/STREAM/00014.MTS'){
-              filesToCopy.push({
-                sourcePath: sourceFile.path,
-                destinationPath: 'F:/backup/Project 1/2021-06-22/Sony',
-                size: sourceFile.size,
-                status: 'done'
-              })
-
-            }
           }
-        })
+        }
+
       })
+      // We have all files for this card, add the final destination
+      const destinationCardName = 
+        forceNewCard 
+        ? CARD_PREFIX + forceNewCard
+        : forceOldCard
+          ? CARD_PREFIX + forceOldCard
+          : newCard
+      const destinationPath = path.join(
+        destinationDrive.path,
+        destinationDrive.rootFolder,
+        driveStore._uiStore.activeProject,
+        driveStore._uiStore.dateFolder,
+        sourceDrive.label,
+        destinationCardName
+      )
+      filesToCopyFromThisCard.forEach( file => file.destinationPath = destinationPath )
+      driveStore._filesToCopy = [ ...driveStore._filesToCopy, ...filesToCopyFromThisCard ]
     })
   })
-  driveStore._filesToCopy = filesToCopy
 }
 
 export default scanForFilesToCopy
@@ -63,11 +82,45 @@ const drivesNotReady = driveStore => {
   return !todoSourceDrives.length || !todoDestinationDrives.length
 }
 
-const areFilesEqual = ({ sourceFile, destFile }) => {
-  // double check that source and destination are equal
-  // TODO check destinationPath
-  if(destFile.size !== sourceFile.size ) return false
-  if(path.basename(destFile.path) !== path.basename(sourceFile.path) ) return false
-  if(destFile.modified.getTime() !== sourceFile.modified.getTime() ) return false
-  return true
+//////////////////
+
+const sourceFileIsInDestinationDrive = ({ sourceFile, destinationDrive }) => {
+  const foundDestinationFile = destinationDrive.files.find( 
+    destFile => path.basename(destFile.path) === path.basename(sourceFile.path) 
+  )
+  if(!foundDestinationFile) return { srcIsInDestination: false, isSameFile: false }
+
+  // double check that source and destination are the same
+  if(foundDestinationFile.size !== sourceFile.size ) {
+    return { srcIsInDestination: true, isSameFile: false }
+  }
+  if(foundDestinationFile.modified.getTime() !== sourceFile.modified.getTime() ) {
+    return { srcIsInDestination: true, isSameFile: false }
+  }
+  const regex = path.dirname(foundDestinationFile.path).match(CARD_REGEX)
+  return { srcIsInDestination: true, isSameFile: true, oldCard: regex[1] }
+}
+
+
+/////////////////
+
+
+const getNewCard = ({ destinationDrive }) => {
+  //    if dest has no folders, make a new Card-001
+  //        else, make a new folder highestCard+1
+  if(!destinationDrive.files.length) return 'Card-001'
+
+  const existingCards = destinationDrive.files
+    .map( file => {
+      const regex = path.dirname(file.path).match(CARD_REGEX)
+      if( !regex || !regex.length || regex.length !== 2) { return 1 }
+      return regex[1]
+    })
+
+  const highestCardNr = existingCards
+    .reduce( (acc, curr) => curr > acc ? curr : acc ) 
+  const destinationCardNr = (parseInt(highestCardNr)+1)
+    .toString()
+    .padStart(3, '0')
+  return CARD_PREFIX + destinationCardNr // Card- + 00X
 }
