@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button'
 import { Context } from 'store'
 import { observer } from 'mobx-react-lite'
 import InfoPanel from './InfoPanel'
+import StatsPanel from './StatsPanel'
 
 const ActionPanel = observer( () => {
   const classes = useStyles()
@@ -16,8 +17,8 @@ const ActionPanel = observer( () => {
   const handleAutoIngest = () => { setAutoIngest( checked => !checked) }
 
   useEffect( () => {
-    window.api.drives_getCopyProgress( progress => {
-      console.log(progress)
+    window.api.drives_getCopyProgress( data => {
+      store.ui.setProgress(data.progress)
     })
   },[] )
 
@@ -26,19 +27,20 @@ const ActionPanel = observer( () => {
     store.driveStore.startAnUpload()
   }
 
-
+  const startDisabled = store.ui.appState === 'running' || !store.driveStore.filesToCopy.length
   return (
     <Paper className={classes.root}>
       <InfoPanel />
       <div className={classes.hbox}>
-      <Button variant="contained" color="primary" disabled={ store.ui.appState === 'running' } onClick={startWrangling}>
-        Start Ingest
-      </Button>
-      <FormControlLabel
-        control={<Switch checked={autoIngest} onChange={handleAutoIngest} name="autoIngest"  color="primary" />}
-        label="Auto Ingest"
+        <Button variant="contained" color="primary" disabled={ startDisabled } onClick={startWrangling}>
+          Start Ingest
+        </Button>
+        <FormControlLabel
+          control={<Switch checked={autoIngest} onChange={handleAutoIngest} name="autoIngest"  color="primary" />}
+          label="Auto Ingest"
         />
       </div>
+      <StatsPanel />
     </Paper>
   )
 })

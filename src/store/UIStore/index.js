@@ -1,6 +1,5 @@
 import { makeAutoObservable } from "mobx"
 import moment from 'moment'
-import path from 'path'
 
 class UIStore {
 
@@ -21,6 +20,12 @@ class UIStore {
 
     /**@type {alertState} */
     this._alertState = { open: false, message: '', severity: 'warning' }
+
+    /**@type {currentProgress} */
+    this._currentProgress = {}
+
+    /**@type {previousProgress} */
+    this._previousProgress = {}
     
     makeAutoObservable(this)
     loadSettingsFromStorage(this)
@@ -36,6 +41,7 @@ class UIStore {
   startWrangling() { this._appState = 'running' }
   setAppState(state) {this._appState = state }
   setAlertState(state) { this._alertState = { ...this._alertState, ...state } }
+  setProgress(progress) { this._previousProgress = this._currentProgress; this._currentProgress = progress }
   
   // Getters
   get activeProject() { return this._projects?.activeProject ? this._projects.activeProject : 'chooseProject' }
@@ -43,6 +49,8 @@ class UIStore {
   get dateFolder() { return this._dateFolder.format('yyyy-MM-DD') }
   get appState() { return this._appState }
   get alertState() { return this._alertState }
+  get currentProgress() { return this._currentProgress }
+  get previousProgress() { return this._previousProgress }
   
 }
 export default UIStore
@@ -73,7 +81,7 @@ const loadSettingsFromStorage = async self => {
  */
 
 /**
- * @typedef {('standby'|'running')} appState state of the app
+ * @typedef {('standby'|'running'|'done')} appState state of the app
  */
 
 /**

@@ -12,6 +12,7 @@ const CARD_REGEX = new RegExp(`.*\/${CARD_PREFIX}(...)`)
 */
 
 const scanForFilesToCopy = ({ driveStore }) => {
+  const uiStore = driveStore._uiStore
   driveStore._filesToCopy = []
   if( drivesNotReady(driveStore) ) { return }
 
@@ -36,7 +37,12 @@ const scanForFilesToCopy = ({ driveStore }) => {
           // filename already exists in destination
           if(isSameFile && !forceNewCard){
             // identical file, so skip copy, but send new files to this cardFolder( new clips added later on same card)
-            forceOldCard = oldCard //regex[1]
+            forceOldCard = oldCard
+            filesToCopyFromThisCard.push({
+              sourcePath: sourceFile.path,
+              size: sourceFile.size,
+              status: 'done'
+            })
           }
           else {
             // We have a name collision with existing file.  Send this file and all other clips to newCard
@@ -53,9 +59,9 @@ const scanForFilesToCopy = ({ driveStore }) => {
       // We have all files for this card, add the final destination
       const destinationCardName = 
         forceNewCard 
-        ? CARD_PREFIX + forceNewCard
+        ? forceNewCard
         : forceOldCard
-          ? CARD_PREFIX + forceOldCard
+          ? forceOldCard
           : newCard
       const destinationPath = path.join(
         destinationDrive.path,
@@ -67,6 +73,22 @@ const scanForFilesToCopy = ({ driveStore }) => {
       )
       filesToCopyFromThisCard.forEach( file => file.destinationPath = destinationPath )
       driveStore._filesToCopy = [ ...driveStore._filesToCopy, ...filesToCopyFromThisCard ]
+
+      if(forceNewCard) { 
+        driveStore._uiStore.setAlertState({ 
+          open: true, 
+          message: 'Name collision. A different clip with the same name already exists.  All new clips will be copied to a separate folder', 
+          severity:'warning' })
+      }
+      else if(forceOldCard) {
+        driveStore._uiStore.setAlertState({ 
+          open: true, 
+          message: 'Some clips are already in destination.  New clips will be added to the same folder', 
+          severity:'info' 
+        })
+      }
+      // ready to go
+      if(filesToCopyFromThisCard.length) { uiStore.setAppState('standby') }
     })
   })
 }
@@ -98,7 +120,7 @@ const sourceFileIsInDestinationDrive = ({ sourceFile, destinationDrive }) => {
     return { srcIsInDestination: true, isSameFile: false }
   }
   const regex = path.dirname(foundDestinationFile.path).match(CARD_REGEX)
-  return { srcIsInDestination: true, isSameFile: true, oldCard: regex[1] }
+  return { srcIsInDestination: true, isSameFile: true, oldCard: CARD_PREFIX+regex[1] }
 }
 
 

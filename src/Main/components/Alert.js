@@ -15,7 +15,7 @@ const Alert = observer ( () => {
       open={alertState.open}
       onClose={handleClose}
       anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-      autoHideDuration={6000}
+      autoHideDuration={alertState.severity === 'error' ? null : 6000}
     >
       <MuiAlert onClose={handleClose} severity={alertState.severity}> 
         {alertState.message}

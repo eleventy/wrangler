@@ -7,6 +7,7 @@ import DriveOverview from './DriveOverview'
 const InfoPanel = observer ( () => {
   const store = useContext(Context)
   const filesToCopy = splitFilesByDestination( store.driveStore.filesToCopy )
+
   const destinationList = []
   for (const key in filesToCopy) {
     destinationList.push({ drive: key, files: filesToCopy[key] })
@@ -22,7 +23,8 @@ const InfoPanel = observer ( () => {
 })
 export default InfoPanel
 
-//////////////
+
+////////////
 
 const splitFilesByDestination = unSortedFilesToCopy => {
   // Create a separate array per destination for all files

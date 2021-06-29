@@ -26,6 +26,9 @@ class DriveStore {
   updateDriveLists(allDrives) { updateDriveLists({ driveStore: this, allDrives }) } // Update unassigned, source and dest drivelists
   scanSourceDrive(drive) { scanSourceDrive({ driveStore: this, drive }) }
   scanDestinationDrive(drive) { scanDestinationDrive({ driveStore: this, drive }) }
+  scanAllDestinationDrives() { 
+    this._destinationDrives.forEach( drive => scanDestinationDrive({ driveStore: this, drive }) )
+  }
   scanForFilesToCopy() { scanForFilesToCopy({ driveStore: this })}
   startAnUpload() { startAnUpload({ driveStore: this }) }
 

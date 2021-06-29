@@ -13,7 +13,7 @@ const ActiveProject = observer( () => {
 
   return (
     <div>
-      <Select value={project} onChange={handleProjectChange} variant='outlined' >
+      <Select value={project} onChange={handleProjectChange} variant='outlined' style={{ height: 35 }}>
         <MenuItem value={'chooseProject'}>Select Project</MenuItem>
         <MenuItem value={'Project 1'}>Project 1</MenuItem>
         <MenuItem value={'Project 2'}>Project 2</MenuItem>

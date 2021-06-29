@@ -11,13 +11,13 @@ const Datepicker = observer( () => {
   const setDateFolder = newDate => { store.ui.setDateFolder(newDate) }
 
   return (
-    <LocalizationProvider dateAdapter={AdapterMoment} >
+    <LocalizationProvider dateAdapter={AdapterMoment} style={{ height: 30 }}>
       <DatePicker
         value={store.ui.dateFolder}
         inputFormat='yyyy-MM-DD'
         mask='____-__-__'
         onChange={ setDateFolder }
-        renderInput={(params) => <TextField {...params} helperText={null} />}
+        renderInput={(params) => <TextField {...params} helperText={null} size="small" variant="standard" />}
       />
     </LocalizationProvider>
   )

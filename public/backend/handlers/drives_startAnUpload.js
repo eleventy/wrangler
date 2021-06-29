@@ -7,7 +7,9 @@ ipcMain.handle('drives_startAnUpload', async (evt, files) => {
   try{
     console.log('starting copy')
 
-    const source = files.map( file => file.sourcePath)
+    const source = files
+      .filter( file => file.status === 'todo')
+      .map( file => file.sourcePath)
     const destination = files[0].destinationPath
     await cpy(source, destination, { concurrency:1, overwrite: false })
       .on('progress', progress => { progressHandler({ progress, evt }) } )
@@ -16,7 +18,7 @@ ipcMain.handle('drives_startAnUpload', async (evt, files) => {
   }
   catch(error){
     console.error(error)
-    return { error, success: false }
+    return { error: new Error(error.message), success: false }
   }
 })
 
