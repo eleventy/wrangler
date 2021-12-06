@@ -1,6 +1,7 @@
 import React from 'react'
 import ActiveProject from './ActiveProject'
 import Datepicker from './Datepicker'
+import Rescan from './Rescan'
 
 const Toppanel = () => {
 
@@ -8,6 +9,7 @@ const Toppanel = () => {
     <div style={styles.root}>
       <ActiveProject />
       <Datepicker />
+      <Rescan />
     </div>
   )
 }

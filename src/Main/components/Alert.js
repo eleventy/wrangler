@@ -4,6 +4,8 @@ import { Context } from 'store'
 import Snackbar from '@material-ui/core/Snackbar'
 import MuiAlert from '@material-ui/core/Alert'
 
+const ALERT_TIMEOUT = 8000
+
 const Alert = observer ( () => {
   const store = useContext(Context)
   const alertState = store.ui.alertState
@@ -15,7 +17,7 @@ const Alert = observer ( () => {
       open={alertState.open}
       onClose={handleClose}
       anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-      autoHideDuration={alertState.severity === 'error' ? null : 6000}
+      autoHideDuration={alertState.severity === 'error' ? null : ALERT_TIMEOUT}
     >
       <MuiAlert onClose={handleClose} severity={alertState.severity}> 
         {alertState.message}

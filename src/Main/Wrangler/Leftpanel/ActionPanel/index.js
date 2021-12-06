@@ -27,12 +27,14 @@ const ActionPanel = observer( () => {
     store.driveStore.startAnUpload()
   }
 
-  const startDisabled = store.ui.appState === 'running' || !store.driveStore.filesToCopy.length
+  const readyToCopy = store.ui.appState === 'standby' && !!store.driveStore.filesToCopyTodo.length
+  console.log(store.ui.appState === 'standby', store.driveStore.filesToCopyTodo.length, readyToCopy)
+
   return (
     <Paper className={classes.root}>
       <InfoPanel />
       <div className={classes.hbox}>
-        <Button variant="contained" color="primary" disabled={ startDisabled } onClick={startWrangling}>
+        <Button variant="contained" color="primary" disabled={ !readyToCopy } onClick={startWrangling}>
           Start Ingest
         </Button>
         <FormControlLabel
@@ -40,7 +42,7 @@ const ActionPanel = observer( () => {
           label="Auto Ingest"
         />
       </div>
-      <StatsPanel />
+      { readyToCopy && <StatsPanel />}
     </Paper>
   )
 })

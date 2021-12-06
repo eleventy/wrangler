@@ -7,8 +7,9 @@ import { runInAction } from "mobx"
  * @param {Object} args.self The DriveStore object
  * @param {Object} args.drive Drive object, containing the path 
  */
-const scanDestinationDrive = async ({ driveStore, drive }) => {
+const scanDestinationDrive = async ({ driveStore, drive, activeProject }) => {
   // @ts-ignore
+  drive.activeProject = activeProject
   const result = await window.api.drives_scanMediaDrive( toJS( drive) )
   if(result.error){
     console.log(result.error)

@@ -9,6 +9,7 @@ const ActiveProject = observer( () => {
   const project = store.ui.activeProject
   const handleProjectChange = evt => {
     store.ui.setActiveProject(evt.target.value)
+    store.driveStore.scanAllDrives()
   }
 
   return (

@@ -44,7 +44,10 @@ const parseRawList = rawlist => {
 /////////////
 
 const runRecipes = drive => {
-  if (drive.path === 'C:/') { drive.type = 'hidden' }
+  // TODO: temporary recipes
+  if (drive.path === 'C:/') {
+    drive.type = 'hidden'
+  }
   if (drive.path === 'D:/') { 
     drive.type = 'destination' 
     drive.rootFolder = 'backup'

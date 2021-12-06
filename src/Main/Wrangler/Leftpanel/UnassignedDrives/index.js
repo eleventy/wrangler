@@ -17,7 +17,7 @@ const UnassignedDrives = observer( () => {
   return (
     <Paper className={classes.paper}>
       <Typography variant="caption" display="block" color='textSecondary'>
-        Unassigned
+        Unassigned / Unknown drives:
       </Typography>
       <div className={classes.hbox}>
         { unassignedDrives.map( drive => <DriveCard key={drive.path} drive={drive} /> ) }

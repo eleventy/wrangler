@@ -25,9 +25,14 @@ class DriveStore {
   pollDrives() { pollDrives({ driveStore: this }) } // Scan system for new/removed drives and cards
   updateDriveLists(allDrives) { updateDriveLists({ driveStore: this, allDrives }) } // Update unassigned, source and dest drivelists
   scanSourceDrive(drive) { scanSourceDrive({ driveStore: this, drive }) }
-  scanDestinationDrive(drive) { scanDestinationDrive({ driveStore: this, drive }) }
-  scanAllDestinationDrives() { 
-    this._destinationDrives.forEach( drive => scanDestinationDrive({ driveStore: this, drive }) )
+  scanDestinationDrive(drive) { 
+    const activeProject = this._uiStore.activeProject
+    scanDestinationDrive({ driveStore: this, drive, activeProject })
+  }
+  scanAllDrives() { 
+    const activeProject = this._uiStore.activeProject
+    this._destinationDrives.forEach( drive => scanDestinationDrive({ driveStore: this, drive, activeProject }) )
+    this._sourceDrives.forEach( drive => scanSourceDrive({ driveStore: this, drive }) )
   }
   scanForFilesToCopy() { scanForFilesToCopy({ driveStore: this })}
   startAnUpload() { startAnUpload({ driveStore: this }) }
@@ -38,6 +43,7 @@ class DriveStore {
   get sourceDrives() { return this._sourceDrives }
   get destinationDrives() { return this._destinationDrives }
   get filesToCopy() { return this._filesToCopy }
+  get filesToCopyTodo() { return this._filesToCopy.filter( file => file.status==='todo') }
   
 }
 export default DriveStore

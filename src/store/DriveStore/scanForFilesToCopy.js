@@ -74,21 +74,23 @@ const scanForFilesToCopy = ({ driveStore }) => {
       filesToCopyFromThisCard.forEach( file => file.destinationPath = destinationPath )
       driveStore._filesToCopy = [ ...driveStore._filesToCopy, ...filesToCopyFromThisCard ]
 
-      if(forceNewCard) { 
-        driveStore._uiStore.setAlertState({ 
-          open: true, 
-          message: 'Name collision. A different clip with the same name already exists.  All new clips will be copied to a separate folder', 
-          severity:'warning' })
+      if(driveStore._filesToCopy.filter( file => file.status==='todo').length) {
+        if(forceNewCard) { 
+          driveStore._uiStore.setAlertState({ 
+            open: true, 
+            message: 'Name collision. A different clip with the same name already exists.  All new clips will be copied to a separate folder', 
+            severity:'warning' })
+          }
+        else if(forceOldCard) {
+          driveStore._uiStore.setAlertState({ 
+            open: true, 
+            message: 'Some clips are already in destination.  New clips will be added to the same folder', 
+            severity:'info' 
+          })
+        }
+        // ready to go
+        uiStore.setAppState('standby') 
       }
-      else if(forceOldCard) {
-        driveStore._uiStore.setAlertState({ 
-          open: true, 
-          message: 'Some clips are already in destination.  New clips will be added to the same folder', 
-          severity:'info' 
-        })
-      }
-      // ready to go
-      if(filesToCopyFromThisCard.length) { uiStore.setAppState('standby') }
     })
   })
 }

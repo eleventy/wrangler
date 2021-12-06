@@ -26,7 +26,14 @@ ipcMain.handle('drives_scanMediaDrive', async (evt, drive) => {
 
 ///////////////
 
-const getCwd = drive => drive.rootFolder ? path.posix.join(drive.path, drive.rootFolder) : drive.path
+const getCwd = drive => {
+  if(drive.type === 'destination') {
+    console.log( drive.path, drive.rootFolder, drive.activeProject )
+    console.log(path.posix.join(drive.path, drive.rootFolder, drive.activeProject))
+    return  path.posix.join(drive.path, drive.rootFolder, drive.activeProject)
+  }
+  return drive.path
+}
 
 
 const getGlobFileExtensionPattern = fileTypesToCopy => {
