@@ -7,10 +7,14 @@ const pollDrives = async ({ driveStore }) => {
     figure out what to do with them.
   */
   // @ts-ignore
-  const rawList = await window.api.drives_getDriveList()
-  const allDrives = parseRawList(rawList)
+  try {
+    const rawList = await window.api.drives_getDriveList()
+    const allDrives = parseRawList(rawList)
 
-  driveStore.updateDriveLists(allDrives)
+    driveStore.updateDriveLists(allDrives)
+  } catch (err) {
+    console.error(err)
+  }
 }
 export default pollDrives
 

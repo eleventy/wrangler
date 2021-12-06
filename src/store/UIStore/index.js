@@ -57,9 +57,13 @@ export default UIStore
 /// ////
 
 const loadSettingsFromStorage = async self => {
-  self._settings = await window.api.settings_getSettings('settings')
-  const projects = await window.api.settings_getSettings('projects')
-  self.setProjects(projects)
+  try {
+    self._settings = await window.api.settings_getSettings('settings')
+    const projects = await window.api.settings_getSettings('projects')
+    self.setProjects(projects)
+  } catch (err) {
+    console.error(err)
+  }
 }
 
 /// ////

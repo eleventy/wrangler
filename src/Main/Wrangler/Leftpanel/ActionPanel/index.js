@@ -17,9 +17,13 @@ const ActionPanel = observer(() => {
   const handleAutoIngest = () => { setAutoIngest(checked => !checked) }
 
   useEffect(() => {
-    window.api.drives_getCopyProgress(data => {
-      store.ui.setProgress(data.progress)
-    })
+    try {
+      window.api.drives_getCopyProgress(data => {
+        store.ui.setProgress(data.progress)
+      })
+    } catch (err) {
+      console.error(err)
+    }
   }, [])
 
   const startWrangling = () => {
