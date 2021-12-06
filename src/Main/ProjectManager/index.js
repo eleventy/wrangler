@@ -1,7 +1,6 @@
 import React from 'react'
 
 const ProjectManager = () => {
-
   return (
     <div style={styles.root}>
       ProjectManager
@@ -10,7 +9,7 @@ const ProjectManager = () => {
 }
 export default ProjectManager
 
-/////////////
+/// //////////
 
 const styles = {
   root: {

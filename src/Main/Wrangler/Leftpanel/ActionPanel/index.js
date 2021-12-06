@@ -1,28 +1,28 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { makeStyles } from '@material-ui/styles'
-import Paper from '@material-ui/core/Paper'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Switch from '@material-ui/core/Switch'
-import Button from '@material-ui/core/Button'
+import { makeStyles } from '@mui/styles'
+import Paper from '@mui/material/Paper'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Switch from '@mui/material/Switch'
+import Button from '@mui/material/Button'
 import { Context } from 'store'
 import { observer } from 'mobx-react-lite'
 import InfoPanel from './InfoPanel'
 import StatsPanel from './StatsPanel'
 
-const ActionPanel = observer( () => {
+const ActionPanel = observer(() => {
   const classes = useStyles()
   const store = useContext(Context)
-  const [ autoIngest, setAutoIngest ] = useState(false)
+  const [autoIngest, setAutoIngest] = useState(false)
 
-  const handleAutoIngest = () => { setAutoIngest( checked => !checked) }
+  const handleAutoIngest = () => { setAutoIngest(checked => !checked) }
 
-  useEffect( () => {
-    window.api.drives_getCopyProgress( data => {
+  useEffect(() => {
+    window.api.drives_getCopyProgress(data => {
       store.ui.setProgress(data.progress)
     })
-  },[] )
+  }, [])
 
-  const startWrangling = () => { 
+  const startWrangling = () => {
     store.ui.startWrangling()
     store.driveStore.startAnUpload()
   }
@@ -34,34 +34,34 @@ const ActionPanel = observer( () => {
     <Paper className={classes.root}>
       <InfoPanel />
       <div className={classes.hbox}>
-        <Button variant="contained" color="primary" disabled={ !readyToCopy } onClick={startWrangling}>
+        <Button variant='contained' color='primary' disabled={!readyToCopy} onClick={startWrangling}>
           Start Ingest
         </Button>
         <FormControlLabel
-          control={<Switch checked={autoIngest} onChange={handleAutoIngest} name="autoIngest"  color="primary" />}
-          label="Auto Ingest"
+          control={<Switch checked={autoIngest} onChange={handleAutoIngest} name='autoIngest' color='primary' />}
+          label='Auto Ingest'
         />
       </div>
-      { readyToCopy && <StatsPanel />}
+      {readyToCopy && <StatsPanel />}
     </Paper>
   )
 })
 export default ActionPanel
 
-/////////////////
+/// //////////////
 
-const useStyles = makeStyles( theme => ({
+const useStyles = makeStyles(theme => ({
   root: {
     padding: 5,
     margin: 10,
     backgroundColor: theme.palette.background.default,
     borderWidth: 2,
     borderColor: theme.palette.primary.main,
-    borderStyle: 'solid',
+    borderStyle: 'solid'
 
   },
   hbox: {
-    display:'flex',
+    display: 'flex',
     justifyContent: 'space-around'
-  },
+  }
 }))

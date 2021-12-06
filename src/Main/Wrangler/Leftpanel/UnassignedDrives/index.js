@@ -1,28 +1,27 @@
-import React,{ useContext } from 'react'
+import React, { useContext } from 'react'
 import { observer } from 'mobx-react-lite'
-import { makeStyles } from '@material-ui/styles'
-import Paper from '@material-ui/core/Paper'
-import Typography from '@material-ui/core/Typography'
+import { makeStyles } from '@mui/styles'
+import Paper from '@mui/material/Paper'
+import Typography from '@mui/material/Typography'
 import DriveCard from './DriveCard'
 import { Context } from '../../../../store'
 
-
-const UnassignedDrives = observer( () => {
+const UnassignedDrives = observer(() => {
   const classes = useStyles()
   const store = useContext(Context)
   const unassignedDrives = store.driveStore.unassignedDrives
 
-  if(!unassignedDrives.length) return null
+  if (!unassignedDrives.length) return null
 
   return (
     <Paper className={classes.paper}>
-      <Typography variant="caption" display="block" color='textSecondary'>
+      <Typography variant='caption' display='block' color='textSecondary'>
         Unassigned / Unknown drives:
       </Typography>
       <div className={classes.hbox}>
-        { unassignedDrives.map( drive => <DriveCard key={drive.path} drive={drive} /> ) }
+        {unassignedDrives.map(drive => <DriveCard key={drive.path} drive={drive} />)}
       </div>
-      <Typography variant="caption" display="block" color='textSecondary'>
+      <Typography variant='caption' display='block' color='textSecondary'>
         Please go to the Cookbook page to assign functions to these drives
       </Typography>
     </Paper>
@@ -30,7 +29,7 @@ const UnassignedDrives = observer( () => {
 })
 export default UnassignedDrives
 
-const useStyles = makeStyles( theme => ({
+const useStyles = makeStyles(theme => ({
   paper: {
     padding: 10,
     margin: 10,
@@ -40,6 +39,6 @@ const useStyles = makeStyles( theme => ({
     borderStyle: 'solid'
   },
   hbox: {
-    display:'flex'
+    display: 'flex'
   }
 }))

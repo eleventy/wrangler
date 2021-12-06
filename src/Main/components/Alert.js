@@ -1,16 +1,16 @@
 import React, { useContext } from 'react'
 import { observer } from 'mobx-react-lite'
 import { Context } from 'store'
-import Snackbar from '@material-ui/core/Snackbar'
-import MuiAlert from '@material-ui/core/Alert'
+import Snackbar from '@mui/material/Snackbar'
+import MuiAlert from '@mui/material/Alert'
 
 const ALERT_TIMEOUT = 8000
 
-const Alert = observer ( () => {
+const Alert = observer(() => {
   const store = useContext(Context)
   const alertState = store.ui.alertState
 
-  const handleClose = () => { store.ui.setAlertState({ open: false })  }
+  const handleClose = () => { store.ui.setAlertState({ open: false }) }
 
   return (
     <Snackbar
@@ -19,7 +19,7 @@ const Alert = observer ( () => {
       anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
       autoHideDuration={alertState.severity === 'error' ? null : ALERT_TIMEOUT}
     >
-      <MuiAlert onClose={handleClose} severity={alertState.severity}> 
+      <MuiAlert onClose={handleClose} severity={alertState.severity}>
         {alertState.message}
       </MuiAlert>
     </Snackbar>

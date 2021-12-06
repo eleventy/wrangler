@@ -11,18 +11,18 @@ import { Context } from '../../store'
 const Main = () => {
   const store = useContext(Context)
 
-  useEffect( () => {
+  useEffect(() => {
     // Scan the system for new drives every X seconds
     const { pollingInterval } = store.ui.settings
-    const interval = setInterval( () => {
+    const interval = setInterval(() => {
       store.driveStore.pollDrives()
-    }, pollingInterval )
+    }, pollingInterval)
     return () => {
       clearInterval(interval)
     }
-  }, [] )
+  }, [])
   return (
-    <div style={styles.root} >
+    <div style={styles.root}>
       <Toppanel />
       <div style={styles.hbox}>
         <div style={styles.leftPanel}>
@@ -41,7 +41,7 @@ const Main = () => {
 }
 export default Main
 
-///////
+/// ////
 
 const styles = {
   root: {
@@ -53,7 +53,7 @@ const styles = {
   hbox: {
     display: 'flex',
     justifyContent: 'column',
-    height: '100vh',
+    height: '100vh'
   },
   leftPanel: {
     display: 'flex',
@@ -64,10 +64,10 @@ const styles = {
   rightPanel: {
     display: 'flex',
     flexDirection: 'column',
-    flexGrow: 1,
+    flexGrow: 1
   },
   paper: {
-    padding:40,
-    margin: 10,
+    padding: 40,
+    margin: 10
   }
 }

@@ -1,12 +1,12 @@
 import React, { useContext } from 'react'
 import { observer } from 'mobx-react-lite'
 import { Context } from 'store'
-import Typography from '@material-ui/core/Typography'
+import Typography from '@mui/material/Typography'
 import DriveOverview from './DriveOverview'
 
-const InfoPanel = observer ( () => {
+const InfoPanel = observer(() => {
   const store = useContext(Context)
-  const filesToCopy = splitFilesByDestination( store.driveStore.filesToCopy )
+  const filesToCopy = splitFilesByDestination(store.driveStore.filesToCopy)
 
   const destinationList = []
   for (const key in filesToCopy) {
@@ -17,14 +17,13 @@ const InfoPanel = observer ( () => {
       <Typography variant='caption' display='block' color='textSecondary'>
         Files to backup:
       </Typography>
-      {destinationList.map( drive => <DriveOverview drive={drive.drive} files={drive.files} key={drive.drive} /> ) }
+      {destinationList.map(drive => <DriveOverview drive={drive.drive} files={drive.files} key={drive.drive} />)}
     </div>
   )
 })
 export default InfoPanel
 
-
-////////////
+/// /////////
 
 const splitFilesByDestination = unSortedFilesToCopy => {
   // Create a separate array per destination for all files

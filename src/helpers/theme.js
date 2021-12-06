@@ -1,6 +1,5 @@
-import { createTheme } from '@material-ui/core/styles'
-import blue from '@material-ui/core/colors/blue'
-import lightGreen from '@material-ui/core/colors/lightGreen'
+import { createTheme } from '@mui/material/styles'
+import { blue, lightGreen } from '@mui/material/colors'
 
 const theme = createTheme({
   palette: {
@@ -10,11 +9,11 @@ const theme = createTheme({
       default: '#101010'
     },
     primary: {
-      main: lightGreen['A200'],
+      main: lightGreen.A200
     },
     secondary: {
-      main: blue[500],
-    },
-  },
+      main: blue[500]
+    }
+  }
 })
 export default theme

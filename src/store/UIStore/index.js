@@ -1,9 +1,8 @@
-import { makeAutoObservable } from "mobx"
+import { makeAutoObservable } from 'mobx'
 import moment from 'moment'
 
 class UIStore {
-
-  constructor() {
+  constructor () {
     /** @type {settings} */
     this._settings = {
       pollingInterval: 2000
@@ -15,47 +14,47 @@ class UIStore {
     /** @type {date} */
     this._dateFolder = moment()
 
-    /**@type {appState} */
+    /** @type {appState} */
     this._appState = 'waiting' // waiting, standby
 
-    /**@type {alertState} */
+    /** @type {alertState} */
     this._alertState = { open: false, message: '', severity: 'warning' }
 
-    /**@type {currentProgress} */
+    /** @type {currentProgress} */
     this._currentProgress = {}
 
-    /**@type {previousProgress} */
+    /** @type {previousProgress} */
     this._previousProgress = {}
-    
+
     makeAutoObservable(this)
     loadSettingsFromStorage(this)
   }
 
   // Setters
-  setActiveProject(projectName) { 
+  setActiveProject (projectName) {
     this._projects.activeProject = projectName
-    window.api.settings_setSetting({ keyPath :'projects.activeProject', obj : projectName })
+    window.api.settings_setSetting({ keyPath: 'projects.activeProject', obj: projectName })
   }
-  setProjects(projects) { this._projects = projects }
-  setDateFolder(date) { this._dateFolder = date }
-  startWrangling() { this._appState = 'running' }
-  setAppState(state) {this._appState = state }
-  setAlertState(state) { this._alertState = { ...this._alertState, ...state } }
-  setProgress(progress) { this._previousProgress = this._currentProgress; this._currentProgress = progress }
-  
+
+  setProjects (projects) { this._projects = projects }
+  setDateFolder (date) { this._dateFolder = date }
+  startWrangling () { this._appState = 'running' }
+  setAppState (state) { this._appState = state }
+  setAlertState (state) { this._alertState = { ...this._alertState, ...state } }
+  setProgress (progress) { this._previousProgress = this._currentProgress; this._currentProgress = progress }
+
   // Getters
-  get activeProject() { return this._projects?.activeProject ? this._projects.activeProject : 'chooseProject' }
-  get settings() { return this._settings }
-  get dateFolder() { return this._dateFolder.format('yyyy-MM-DD') }
-  get appState() { return this._appState }
-  get alertState() { return this._alertState }
-  get currentProgress() { return this._currentProgress }
-  get previousProgress() { return this._previousProgress }
-  
+  get activeProject () { return this._projects?.activeProject ? this._projects.activeProject : 'chooseProject' }
+  get settings () { return this._settings }
+  get dateFolder () { return this._dateFolder.format('yyyy-MM-DD') }
+  get appState () { return this._appState }
+  get alertState () { return this._alertState }
+  get currentProgress () { return this._currentProgress }
+  get previousProgress () { return this._previousProgress }
 }
 export default UIStore
 
-///////
+/// ////
 
 const loadSettingsFromStorage = async self => {
   self._settings = await window.api.settings_getSettings('settings')
@@ -63,8 +62,7 @@ const loadSettingsFromStorage = async self => {
   self.setProjects(projects)
 }
 
-
-///////
+/// ////
 
 /**
  * @typedef {object} settings

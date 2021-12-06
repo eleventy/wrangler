@@ -4,7 +4,6 @@ import Datepicker from './Datepicker'
 import Rescan from './Rescan'
 
 const Toppanel = () => {
-
   return (
     <div style={styles.root}>
       <ActiveProject />
@@ -15,7 +14,7 @@ const Toppanel = () => {
 }
 export default Toppanel
 
-//////////////
+/// ///////////
 
 const styles = {
   root: {

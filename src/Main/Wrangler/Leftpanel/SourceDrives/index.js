@@ -1,31 +1,30 @@
 import React, { useContext } from 'react'
-import { makeStyles } from '@material-ui/styles'
-import Paper from '@material-ui/core/Paper'
-import Typography from '@material-ui/core/Typography'
+import { makeStyles } from '@mui/styles'
+import Paper from '@mui/material/Paper'
+import Typography from '@mui/material/Typography'
 import SourceDrive from './SourceDrive'
 import { observer } from 'mobx-react-lite'
 import { Context } from 'store'
 
-const SourceDrives = observer( () => {
+const SourceDrives = observer(() => {
   const classes = useStyles()
   const store = useContext(Context)
   const sourceDrives = store.driveStore.sourceDrives
 
   return (
     <Paper className={classes.paper}>
-      <Typography variant="caption" display="block" color='textSecondary'>
+      <Typography variant='caption' display='block' color='textSecondary'>
         Source drives
       </Typography>
       <div className={classes.hbox}>
-        { sourceDrives.map( drive => <SourceDrive key={drive.path} drive={drive} /> ) }
+        {sourceDrives.map(drive => <SourceDrive key={drive.path} drive={drive} />)}
       </div>
     </Paper>
   )
 })
 export default SourceDrives
 
-
-const useStyles = makeStyles( theme => ({
+const useStyles = makeStyles(theme => ({
   paper: {
     padding: 10,
     margin: 10,
@@ -35,6 +34,6 @@ const useStyles = makeStyles( theme => ({
     borderStyle: 'solid'
   },
   hbox: {
-    display:'flex'
+    display: 'flex'
   }
 }))

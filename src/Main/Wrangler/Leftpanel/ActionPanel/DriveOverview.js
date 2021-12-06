@@ -1,17 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { makeStyles } from '@material-ui/styles'
-import Typography from '@material-ui/core/Typography'
-import Paper from '@material-ui/core/Paper'
+import { makeStyles } from '@mui/styles'
+import Typography from '@mui/material/Typography'
+import Paper from '@mui/material/Paper'
 import filesize from 'filesize'
 
-const DriveOverview = ({drive, files}) => {
+const DriveOverview = ({ drive, files }) => {
   const classes = useStyles()
 
   return (
     <Paper className={classes.root}>
-      <Typography variant='caption' display='block' color='textSecondary' >
-        &nbsp;&nbsp;{drive} : { filesInfo(files) }
+      <Typography variant='caption' display='block' color='textSecondary'>
+        &nbsp;&nbsp;{drive} : {filesInfo(files)}
       </Typography>
     </Paper>
   )
@@ -22,9 +22,9 @@ DriveOverview.propTypes = {
 }
 export default DriveOverview
 
-//////////////////
+/// ///////////////
 
-const useStyles = makeStyles( theme => ({
+const useStyles = makeStyles(theme => ({
   root: {
     padding: 4,
     margin: 6
@@ -34,13 +34,12 @@ const useStyles = makeStyles( theme => ({
   }
 }))
 
-/////////////
-
+/// //////////
 
 const filesInfo = files => {
-  const todoFiles = files.filter( file => file.status === 'todo')
-  return `${todoFiles.length} of ${files.length} clips | `
-  + `${filesize( totalFileSize(todoFiles))} GB `
+  const todoFiles = files.filter(file => file.status === 'todo')
+  return `${todoFiles.length} of ${files.length} clips | ` +
+  `${filesize(totalFileSize(todoFiles))} GB `
 }
 
-const totalFileSize = files => files.reduce( (acc, cur) => acc + cur.size, 0 )
+const totalFileSize = files => files.reduce((acc, cur) => acc + cur.size, 0)

@@ -1,18 +1,15 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/styles'
-import Paper from '@material-ui/core/Paper'
-import Typography from '@material-ui/core/Typography'
+import { makeStyles } from '@mui/styles'
+import Paper from '@mui/material/Paper'
+import Typography from '@mui/material/Typography'
 import { observer } from 'mobx-react-lite'
-import { useContext } from "react"
-import { Context } from '../../../../store'
 
-const DriveViewer = observer( () => {
+const DriveViewer = observer(() => {
   const classes = useStyles()
-  const store = useContext(Context)
 
   return (
     <Paper className={classes.paper}>
-      <Typography variant="caption" display="block" color='textSecondary'>
+      <Typography variant='caption' display='block' color='textSecondary'>
         DriveViewer
       </Typography>
     </Paper>
@@ -20,7 +17,7 @@ const DriveViewer = observer( () => {
 })
 export default DriveViewer
 
-const useStyles = makeStyles( theme => ({
+const useStyles = makeStyles(theme => ({
   paper: {
     minHeight: 150,
     padding: 10,
@@ -31,6 +28,6 @@ const useStyles = makeStyles( theme => ({
     borderStyle: 'solid'
   },
   hbox: {
-    display:'flex'
+    display: 'flex'
   }
 }))

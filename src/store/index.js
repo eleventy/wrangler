@@ -1,10 +1,9 @@
-import { createContext } from "react"
+import { createContext } from 'react'
 import DriveStore from './DriveStore'
 import UIStore from './UIStore'
 
 class Store {
-
-  constructor() {
+  constructor () {
     this.ui = new UIStore(this)
     this.driveStore = new DriveStore(this)
   }

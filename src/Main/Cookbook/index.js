@@ -1,7 +1,6 @@
 import React from 'react'
 
 const Cookbook = () => {
-
   return (
     <div style={styles.root}>
       Cookbook
@@ -10,7 +9,7 @@ const Cookbook = () => {
 }
 export default Cookbook
 
-/////////////
+/// //////////
 
 const styles = {
   root: {

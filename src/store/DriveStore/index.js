@@ -7,12 +7,11 @@ import scanForFilesToCopy from './scanForFilesToCopy'
 import startAnUpload from './startAnUpload'
 
 class DriveStore {
-  
-  constructor(rootStore) {
+  constructor (rootStore) {
     /** @type {unassignedDrives} */
     this._unassignedDrives = []
     /** @type {sourceDrives} */
-    this._sourceDrives = [] 
+    this._sourceDrives = []
     /** @type {destinationDrives} */
     this._destinationDrives = []
     /** @type {filesToCopy} */
@@ -22,36 +21,33 @@ class DriveStore {
   }
 
   // Setters
-  pollDrives() { pollDrives({ driveStore: this }) } // Scan system for new/removed drives and cards
-  updateDriveLists(allDrives) { updateDriveLists({ driveStore: this, allDrives }) } // Update unassigned, source and dest drivelists
-  scanSourceDrive(drive) { scanSourceDrive({ driveStore: this, drive }) }
-  scanDestinationDrive(drive) { 
+  pollDrives () { pollDrives({ driveStore: this }) } // Scan system for new/removed drives and cards
+  updateDriveLists (allDrives) { updateDriveLists({ driveStore: this, allDrives }) } // Update unassigned, source and dest drivelists
+  scanSourceDrive (drive) { scanSourceDrive({ driveStore: this, drive }) }
+  scanDestinationDrive (drive) {
     const activeProject = this._uiStore.activeProject
     scanDestinationDrive({ driveStore: this, drive, activeProject })
   }
-  scanAllDrives() { 
-    const activeProject = this._uiStore.activeProject
-    this._destinationDrives.forEach( drive => scanDestinationDrive({ driveStore: this, drive, activeProject }) )
-    this._sourceDrives.forEach( drive => scanSourceDrive({ driveStore: this, drive }) )
-  }
-  scanForFilesToCopy() { scanForFilesToCopy({ driveStore: this })}
-  startAnUpload() { startAnUpload({ driveStore: this }) }
 
+  scanAllDrives () {
+    const activeProject = this._uiStore.activeProject
+    this._destinationDrives.forEach(drive => scanDestinationDrive({ driveStore: this, drive, activeProject }))
+    this._sourceDrives.forEach(drive => scanSourceDrive({ driveStore: this, drive }))
+  }
+
+  scanForFilesToCopy () { scanForFilesToCopy({ driveStore: this }) }
+  startAnUpload () { startAnUpload({ driveStore: this }) }
 
   // Getters
-  get unassignedDrives() { return this._unassignedDrives }
-  get sourceDrives() { return this._sourceDrives }
-  get destinationDrives() { return this._destinationDrives }
-  get filesToCopy() { return this._filesToCopy }
-  get filesToCopyTodo() { return this._filesToCopy.filter( file => file.status==='todo') }
-  
+  get unassignedDrives () { return this._unassignedDrives }
+  get sourceDrives () { return this._sourceDrives }
+  get destinationDrives () { return this._destinationDrives }
+  get filesToCopy () { return this._filesToCopy }
+  get filesToCopyTodo () { return this._filesToCopy.filter(file => file.status === 'todo') }
 }
 export default DriveStore
 
-
-
-
-//////////////////////////
+/// ///////////////////////
 
 /**
  * Drives that have yet to be evaluated, or no recipe could be found
@@ -80,7 +76,7 @@ export default DriveStore
 */
 
 /**
- * @typedef {object} mediaFile - A Media file object 
+ * @typedef {object} mediaFile - A Media file object
  * @property {string} mediaFile.path - Full path to the clip
  * @property {date} mediaFile.created - creation date
  * @property {date} mediaFile.modified - modification date
@@ -88,7 +84,7 @@ export default DriveStore
  */
 
 /**
- * @typedef {object[]} filesToCopy - List of file objects to backup 
+ * @typedef {object[]} filesToCopy - List of file objects to backup
  * @property {string} mediaFile.sourcePath - Full path to the clip, including filename
  * @property {string} mediaFile.destinationPath - Full path to the clip, without filename
  * @property {number} mediaFile.size - filesize in bytes

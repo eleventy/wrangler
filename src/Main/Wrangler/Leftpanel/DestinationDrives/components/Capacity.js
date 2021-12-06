@@ -1,18 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import LinearProgress from '@material-ui/core/LinearProgress'
-import Typography from '@material-ui/core/Typography'
+import LinearProgress from '@mui/material/LinearProgress'
+import Typography from '@mui/material/Typography'
 import filesize from 'filesize'
 
 const Capacity = ({ drive }) => {
+  if (!drive.space) return null
 
-  if(!drive.space) return null
-  
   return (
     <div style={styles.root}>
-      <Typography	variant='caption' display='block' color='textSecondary' >Capacity: {filesize(drive.space.total)}</Typography>
-      <Typography	variant='caption' display='block' color='textSecondary' >Free: {filesize(drive.space.free)}</Typography>
-      <LinearProgress variant="determinate" value={getCapacity(drive.space)} style={styles.progress} color='secondary' />
+      <Typography variant='caption' display='block' color='textSecondary'>Capacity: {filesize(drive.space.total)}</Typography>
+      <Typography variant='caption' display='block' color='textSecondary'>Free: {filesize(drive.space.free)}</Typography>
+      <LinearProgress variant='determinate' value={getCapacity(drive.space)} style={styles.progress} color='secondary' />
     </div>
   )
 }
@@ -21,7 +20,7 @@ Capacity.propTypes = {
 }
 export default Capacity
 
-////////////
+/// /////////
 
 const styles = {
   root: {
@@ -32,6 +31,6 @@ const styles = {
   }
 }
 
-///////
+/// ////
 
 const getCapacity = space => space.free * 100 / space.total

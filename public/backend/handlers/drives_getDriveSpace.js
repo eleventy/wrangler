@@ -5,24 +5,22 @@ ipcMain.handle('drives_getDriveSpace', async (evt, path) => {
   /*
     Get used, free and total diskspace
   */
-  try{
+  try {
     const result = await asyncDiskspace(path)
     return { error: undefined, result }
-  }
-  catch(error){
+  } catch (error) {
     console.error(error)
     return { error, result: undefined }
   }
 })
 
-///////////////
+/// ////////////
 
 const asyncDiskspace = path => {
-  return new Promise( (resolve,reject) => {
+  return new Promise((resolve, reject) => {
     diskspace.check(path, (error, result) => {
-      if(error) reject(error)
+      if (error) reject(error)
       resolve(result)
     })
-
   })
 }
