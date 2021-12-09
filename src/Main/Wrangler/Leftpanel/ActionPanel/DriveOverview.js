@@ -1,19 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { makeStyles } from '@mui/styles'
 import Typography from '@mui/material/Typography'
-import Paper from '@mui/material/Paper'
 import filesize from 'filesize'
+import Card from '../../../../components/Card'
 
 const DriveOverview = ({ drive, files }) => {
-  const classes = useStyles()
-
   return (
-    <Paper className={classes.root}>
+    <Card>
       <Typography variant='caption' display='block' color='textSecondary'>
         &nbsp;&nbsp;{drive} : {filesInfo(files)}
       </Typography>
-    </Paper>
+    </Card>
   )
 }
 DriveOverview.propTypes = {
@@ -22,19 +19,7 @@ DriveOverview.propTypes = {
 }
 export default DriveOverview
 
-/// ///////////////
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    padding: 4,
-    margin: 6
-  },
-  progress: {
-    height: 10
-  }
-}))
-
-/// //////////
+///
 
 const filesInfo = files => {
   const todoFiles = files.filter(file => file.status === 'todo')

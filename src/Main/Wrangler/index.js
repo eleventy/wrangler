@@ -31,10 +31,10 @@ const Main = () => {
           <ActionPanel />
           <DestinationDrives />
         </div>
-        <div style={styles.rightPanel}>
+        {/* <div style={styles.rightPanel}>
           <DriveViewer />
           <ClipViewer />
-        </div>
+        </div> */}
       </div>
     </div>
   )

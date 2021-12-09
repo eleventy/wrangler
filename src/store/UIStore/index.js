@@ -15,7 +15,7 @@ class UIStore {
     this._dateFolder = moment()
 
     /** @type {appState} */
-    this._appState = 'waiting' // waiting, standby
+    this._appState = 'notready' // notready, readytorun
 
     /** @type {alertState} */
     this._alertState = { open: false, message: '', severity: 'warning' }

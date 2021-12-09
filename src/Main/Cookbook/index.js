@@ -1,9 +1,14 @@
 import React from 'react'
+import UnassignedDrives from './UnassignedDrives/index'
+import RecipeList from './RecipeList'
+import SetRecipe from './SetRecipe'
 
 const Cookbook = () => {
   return (
     <div style={styles.root}>
-      Cookbook
+      <UnassignedDrives />
+      <RecipeList />
+      <SetRecipe />
     </div>
   )
 }

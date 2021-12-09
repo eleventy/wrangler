@@ -8,7 +8,7 @@ import Cookbook from './Cookbook'
 import Alert from './components/Alert'
 
 const Main = () => {
-  const [activeTab, setActiveTab] = React.useState(0)
+  const [activeTab, setActiveTab] = React.useState(2)
 
   const handleTabs = (event, newValue) => { setActiveTab(newValue) }
 

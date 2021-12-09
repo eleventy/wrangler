@@ -50,7 +50,7 @@ const parseRawList = rawlist => {
 const runRecipes = drive => {
   // TODO: temporary recipes
   if (drive.path === 'C:/') {
-    drive.type = 'hidden'
+    // drive.type = 'hidden'
   }
   if (drive.path === 'D:/') {
     drive.type = 'destination'
@@ -58,8 +58,8 @@ const runRecipes = drive => {
     drive.fileTypesToCopy = ['mp4', 'mts', 'mp3', 'wav']
   }
   if (drive.path === 'E:/') {
-    drive.type = 'source'
-    drive.label = 'Sony'
-    drive.fileTypesToCopy = ['mp4', 'mts', 'mp3', 'wav']
+    // drive.type = 'source'
+    // drive.label = 'Sony'
+    // drive.fileTypesToCopy = ['mp4', 'mts', 'mp3', 'wav']
   }
 }

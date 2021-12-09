@@ -81,7 +81,7 @@ const scanForFilesToCopy = ({ driveStore }) => {
           })
         }
         // ready to go
-        uiStore.setAppState('standby')
+        uiStore.setAppState('readytorun')
       }
     })
   })
